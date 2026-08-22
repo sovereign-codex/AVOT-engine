@@ -85,6 +85,7 @@ export interface InferenceCapability {
   privacy_boundaries: PrivacyBoundary[];
   strategies: InferenceExecutionPlan["strategy"][];
   available: boolean;
+  evidence_capable: boolean;
   cost_class: "zero_marginal" | "local_preferred" | "metered_allowed";
   trust_level: "local" | "trusted" | "external";
 }
