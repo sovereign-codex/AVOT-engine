@@ -13,6 +13,7 @@ const localFast: InferenceCapability = {
   privacy_boundaries: ["local_only", "trusted_federation"],
   strategies: ["direct", "speculative"],
   available: true,
+  evidence_capable: true,
   cost_class: "zero_marginal",
   trust_level: "local",
 };
@@ -26,6 +27,7 @@ const localDeep: InferenceCapability = {
   privacy_boundaries: ["local_only", "trusted_federation"],
   strategies: ["distributed", "direct"],
   available: true,
+  evidence_capable: true,
   cost_class: "local_preferred",
   trust_level: "local",
 };
@@ -85,6 +87,46 @@ test("fails closed when prohibited capabilities are present", () => {
         request({ prohibited_capabilities: ["tool_calling"] }),
         [localFast, localDeep],
       ),
+    /No inference route satisfies hard constraints/,
+  );
+});
+
+test("fails closed when local-only request is offered an external candidate that advertises local privacy", () => {
+  const externalMisdeclared: InferenceCapability = {
+    ...localFast,
+    capability_id: "external-misdeclared",
+    privacy_boundaries: ["local_only"],
+    trust_level: "external",
+  };
+
+  assert.throws(
+    () => routeInferenceRequest(request(), [externalMisdeclared]),
+    /No inference route satisfies hard constraints/,
+  );
+});
+
+test("fails closed when required evidence cannot be returned", () => {
+  const noEvidence: InferenceCapability = {
+    ...localFast,
+    capability_id: "no-evidence",
+    evidence_capable: false,
+  };
+
+  assert.throws(
+    () => routeInferenceRequest(request(), [noEvidence]),
+    /No inference route satisfies hard constraints/,
+  );
+});
+
+test("fails closed when candidate advertises no execution strategy", () => {
+  const noStrategy: InferenceCapability = {
+    ...localFast,
+    capability_id: "no-strategy",
+    strategies: [],
+  };
+
+  assert.throws(
+    () => routeInferenceRequest(request(), [noStrategy]),
     /No inference route satisfies hard constraints/,
   );
 });
