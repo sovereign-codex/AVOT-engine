@@ -9,7 +9,7 @@
     "start": "node dist/cli.js",
     "validate": "node dist/cli.js",
     "run": "node dist/cli.js",
-    "test": "node --test"
+    "test": "npm run build && node --test dist/inference/*.test.js"
   },
   "dependencies": {
     "yaml": "^2.5.1"

@@ -1,0 +1,35 @@
+name: Sovereign Inference Contract
+
+on:
+  pull_request:
+    paths:
+      - "src/inference/**"
+      - "docs/SOVEREIGN_INFERENCE_CONTRACT_v0.1.md"
+      - "package.json"
+      - ".github/workflows/inference-contract.yml"
+  push:
+    branches:
+      - "architecture/sovereign-inference-contract-v0.1"
+    paths:
+      - "src/inference/**"
+      - "docs/SOVEREIGN_INFERENCE_CONTRACT_v0.1.md"
+      - "package.json"
+      - ".github/workflows/inference-contract.yml"
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and test inference contract
+        run: npm test
