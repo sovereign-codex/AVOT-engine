@@ -27,7 +27,17 @@ function satisfiesPrivacy(
   candidate: InferenceCapability,
   request: SovereignInferenceRequest,
 ): boolean {
-  return candidate.privacy_boundaries.includes(request.privacy_boundary);
+  if (!candidate.privacy_boundaries.includes(request.privacy_boundary)) return false;
+
+  if (request.privacy_boundary === "local_only") {
+    return candidate.trust_level === "local";
+  }
+
+  if (request.privacy_boundary === "trusted_federation") {
+    return candidate.trust_level === "local" || candidate.trust_level === "trusted";
+  }
+
+  return true;
 }
 
 function satisfiesCost(
@@ -36,6 +46,17 @@ function satisfiesCost(
 ): boolean {
   if (!request.max_cost_class) return true;
   return costRank[candidate.cost_class] <= costRank[request.max_cost_class];
+}
+
+function satisfiesEvidence(
+  candidate: InferenceCapability,
+  request: SovereignInferenceRequest,
+): boolean {
+  return !request.evidence_required || candidate.evidence_capable;
+}
+
+function hasDeclaredStrategy(candidate: InferenceCapability): boolean {
+  return candidate.strategies.length > 0;
 }
 
 export function routeInferenceRequest(
@@ -47,7 +68,9 @@ export function routeInferenceRequest(
       candidate.available &&
       satisfiesCapabilities(candidate, request) &&
       satisfiesPrivacy(candidate, request) &&
-      satisfiesCost(candidate, request),
+      satisfiesCost(candidate, request) &&
+      satisfiesEvidence(candidate, request) &&
+      hasDeclaredStrategy(candidate),
   );
 
   if (eligible.length === 0) {
@@ -64,7 +87,7 @@ export function routeInferenceRequest(
   });
 
   const selected = ranked[0];
-  const strategy = selected.strategies[0] ?? "direct";
+  const strategy = selected.strategies[0];
 
   return {
     request_id: request.request_id,
@@ -75,7 +98,7 @@ export function routeInferenceRequest(
     strategy,
     privacy_boundary: request.privacy_boundary,
     authority_posture: request.authority_posture,
-    route_reason: `Selected ${selected.capability_id}: satisfies capability, privacy, availability, cost, and trust constraints.`,
+    route_reason: `Selected ${selected.capability_id}: satisfies capability, privacy/trust, availability, cost, evidence, and strategy constraints.`,
     fallback_plan: ranked.slice(1).map((candidate) => candidate.capability_id),
   };
 }
