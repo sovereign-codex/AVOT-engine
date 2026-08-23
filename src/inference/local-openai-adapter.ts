@@ -25,9 +25,39 @@ function normalizeBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/$/, "");
 }
 
+function assertLocalEndpoint(baseUrl: string): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(baseUrl);
+  } catch {
+    throw new Error("Local inference base_url must be a valid URL.");
+  }
+
+  const host = parsed.hostname.toLowerCase();
+  const isLoopback =
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host === "::1" ||
+    host === "[::1]";
+
+  if (!isLoopback) {
+    throw new Error(
+      `Local-only inference requires a loopback endpoint; received host '${parsed.hostname}'.`,
+    );
+  }
+
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(
+      `Local inference endpoint must use http or https; received '${parsed.protocol}'.`,
+    );
+  }
+}
+
 export function createLocalOpenAIAdapter(
   options: LocalOpenAIAdapterOptions,
 ): InferenceRuntimeAdapter {
+  assertLocalEndpoint(options.base_url);
+
   const runtime = options.runtime ?? "local-openai-compatible";
   const endpoint = `${normalizeBaseUrl(options.base_url)}/v1/chat/completions`;
 
