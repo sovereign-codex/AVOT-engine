@@ -31,6 +31,17 @@ const request: SovereignInferenceRequest = {
   evidence_required: true,
 };
 
+test("local-only adapter rejects remote endpoints before any request is sent", () => {
+  assert.throws(
+    () =>
+      createLocalOpenAIAdapter({
+        base_url: "https://example.com",
+        model: "remote-model",
+      }),
+    /requires a loopback endpoint/,
+  );
+});
+
 test("CIT request completes through a loopback OpenAI-compatible runtime and returns TRACE + Archivist records", async () => {
   const server = createServer((incoming, response) => {
     if (incoming.method !== "POST" || incoming.url !== "/v1/chat/completions") {
