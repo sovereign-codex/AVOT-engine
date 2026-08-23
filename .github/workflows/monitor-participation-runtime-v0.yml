@@ -1,0 +1,42 @@
+name: Monitor Participation Runtime v0
+
+on:
+  pull_request:
+    paths:
+      - "src/runtime/monitor.ts"
+      - "src/runtime/monitor.test.ts"
+      - "src/runtime/index.ts"
+      - "docs/MONITOR_PARTICIPATION_RUNTIME_v0.md"
+      - "package.json"
+      - ".github/workflows/monitor-participation-runtime-v0.yml"
+  push:
+    branches:
+      - "monitor-participation-runtime-v0"
+    paths:
+      - "src/runtime/monitor.ts"
+      - "src/runtime/monitor.test.ts"
+      - "src/runtime/index.ts"
+      - "docs/MONITOR_PARTICIPATION_RUNTIME_v0.md"
+      - "package.json"
+      - ".github/workflows/monitor-participation-runtime-v0.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and run monitor runtime tests
+        run: npm test
