@@ -42,6 +42,55 @@ test("local-only adapter rejects remote endpoints before any request is sent", (
   );
 });
 
+test("evidence-required local inference fails closed when runtime returns no completion identifier", async () => {
+  const server = createServer((incoming, response) => {
+    if (incoming.method !== "POST" || incoming.url !== "/v1/chat/completions") {
+      response.statusCode = 404;
+      response.end();
+      return;
+    }
+
+    incoming.resume();
+    incoming.on("end", () => {
+      response.statusCode = 200;
+      response.setHeader("content-type", "application/json");
+      response.end(
+        JSON.stringify({
+          model: "test-local-model",
+          choices: [
+            {
+              message: {
+                role: "assistant",
+                content: "unwitnessed result",
+              },
+            },
+          ],
+        }),
+      );
+    });
+  });
+
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const address = server.address();
+  assert.ok(address && typeof address !== "string");
+
+  try {
+    const adapter = createLocalOpenAIAdapter({
+      base_url: `http://127.0.0.1:${address.port}`,
+      model: "test-local-model",
+    });
+
+    await assert.rejects(
+      runSovereignInferenceRoundTrip(request, [capability], [adapter]),
+      /no recoverable completion identifier/,
+    );
+  } finally {
+    await new Promise<void>((resolve, reject) =>
+      server.close((error) => (error ? reject(error) : resolve())),
+    );
+  }
+});
+
 test("CIT request completes through a loopback OpenAI-compatible runtime and returns TRACE + Archivist records", async () => {
   const server = createServer((incoming, response) => {
     if (incoming.method !== "POST" || incoming.url !== "/v1/chat/completions") {
