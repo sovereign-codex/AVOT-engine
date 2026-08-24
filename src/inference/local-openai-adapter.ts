@@ -106,7 +106,13 @@ export function createLocalOpenAIAdapter(
           throw new Error("Local inference runtime returned no assistant content.");
         }
 
-        const completionRef = payload.id ?? `request:${request.request_id}`;
+        if (request.evidence_required && !payload.id) {
+          throw new Error(
+            "Local inference runtime returned no recoverable completion identifier for an evidence-required request.",
+          );
+        }
+
+        const evidenceRefs = payload.id ? [`completion:${payload.id}`] : [];
 
         return {
           request_id: request.request_id,
@@ -124,9 +130,7 @@ export function createLocalOpenAIAdapter(
             `runtime:${runtime}`,
             `endpoint:${endpoint}`,
           ],
-          evidence_refs: [
-            `completion:${completionRef}`,
-          ],
+          evidence_refs: evidenceRefs,
           authority_effect:
             plan.authority_posture === "bounded_execute"
               ? "bounded_execution_return"
