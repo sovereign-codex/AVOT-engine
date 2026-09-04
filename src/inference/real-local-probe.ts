@@ -1,3 +1,4 @@
+import { pathToFileURL } from "node:url";
 import { InferenceCapability, SovereignInferenceRequest } from "./contracts.js";
 import { createLocalOpenAIAdapter } from "./local-openai-adapter.js";
 import { runSovereignInferenceRoundTrip } from "./roundtrip.js";
@@ -60,7 +61,8 @@ export async function runRealLocalModelProbe(): Promise<void> {
   process.stdout.write(`${JSON.stringify(roundTrip, null, 2)}\n`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+const entryPath = process.argv[1];
+if (entryPath && import.meta.url === pathToFileURL(entryPath).href) {
   runRealLocalModelProbe().catch((error: unknown) => {
     const message = error instanceof Error ? error.message : String(error);
     process.stderr.write(`Real local model probe failed: ${message}\n`);
