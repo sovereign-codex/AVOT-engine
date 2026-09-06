@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import test from "node:test";
 
+import type { InferenceRuntimeAdapter } from "../inference/adapter.js";
 import { createLocalOpenAIAdapter } from "../inference/local-openai-adapter.js";
 import type { InferenceCapability } from "../inference/contracts.js";
 import { runCitPilot02Conduction } from "./conduction.js";
@@ -63,6 +64,19 @@ const capability: InferenceCapability = {
   trust_level: "local",
 };
 
+const materialEvent = {
+  event_id: "neuroplasticity-signal-001",
+  event_type: "research_signal_observation",
+  observed_at: "2026-08-23T01:00:00Z",
+  source_ref: "evidence:paper-001",
+  subject: "Synthetic neuroplasticity research signal",
+  summary: "A new study appears materially relevant to the existing neuroplasticity hypothesis.",
+  material_change: true,
+  novelty_score: 0.81,
+  confidence: 0.89,
+  recommended_disposition: "research_review" as const,
+};
+
 test("CIT Pilot 02 conducts perception through local inference and returns evidence without consequence", async () => {
   const server = createServer((incoming, response) => {
     if (incoming.method !== "POST" || incoming.url !== "/v1/chat/completions") {
@@ -101,18 +115,7 @@ test("CIT Pilot 02 conducts perception through local inference and returns evide
 
     const result = await runCitPilot02Conduction(
       manifest,
-      {
-        event_id: "neuroplasticity-signal-001",
-        event_type: "research_signal_observation",
-        observed_at: "2026-08-23T01:00:00Z",
-        source_ref: "evidence:paper-001",
-        subject: "Synthetic neuroplasticity research signal",
-        summary: "A new study appears materially relevant to the existing neuroplasticity hypothesis.",
-        material_change: true,
-        novelty_score: 0.81,
-        confidence: 0.89,
-        recommended_disposition: "research_review",
-      },
+      materialEvent,
       [capability],
       [adapter],
     );
@@ -127,6 +130,7 @@ test("CIT Pilot 02 conducts perception through local inference and returns evide
       result.inference.return_path.archivist.result.authority_effect,
       "analysis_return",
     );
+    assert.equal(result.inference.return_path.archivist.result.status, "completed");
     assert.equal(result.council_handoff.target, "cit-monitor-council");
     assert.equal(result.council_handoff.authority_posture, "analysis_only");
     assert.equal(result.council_handoff.institutional_effect, "none");
@@ -137,12 +141,49 @@ test("CIT Pilot 02 conducts perception through local inference and returns evide
       ),
     );
     assert.equal(result.evidence_return.dormancy_entered, true);
-    assert.equal(result.trace.at(-1), "cit:council_handoff_prepared");
+    assert.equal(result.trace.at(-1), "cit:dormant");
+    assert.deepEqual(result.trace.slice(-3), [
+      "cit:bounded_inference_returned",
+      "cit:council_handoff_prepared",
+      "cit:dormant",
+    ]);
   } finally {
     await new Promise<void>((resolve, reject) =>
       server.close((error) => (error ? reject(error) : resolve())),
     );
   }
+});
+
+test("CIT Pilot 02 rejects non-completed inference before any council handoff", async () => {
+  const refusedAdapter: InferenceRuntimeAdapter = {
+    runtime: "local-openai-compatible",
+    execute: async ({ request, plan }) => ({
+      request_id: request.request_id,
+      status: "refused",
+      capability_used: plan.target_capability,
+      runtime_used: plan.target_runtime,
+      model_used: plan.target_model,
+      node_refs: plan.target_node ? [plan.target_node] : [],
+      verification: {
+        required: false,
+        status: "not_required",
+      },
+      provenance_refs: ["runtime:test-refusal"],
+      evidence_refs: ["evidence:refusal-001"],
+      authority_effect: "analysis_return",
+    }),
+  };
+
+  await assert.rejects(
+    () =>
+      runCitPilot02Conduction(
+        manifest,
+        { ...materialEvent, event_id: "neuroplasticity-refused-001" },
+        [capability],
+        [refusedAdapter],
+      ),
+    /cit_pilot_02:inference_not_completed:refused/,
+  );
 });
 
 test("CIT Pilot 02 does not recruit inference when perception returns no material change", async () => {
@@ -167,4 +208,5 @@ test("CIT Pilot 02 does not recruit inference when perception returns no materia
   assert.equal(result.council_handoff.institutional_effect, "none");
   assert.equal(result.evidence_return.result, "no_material_change");
   assert.equal(result.evidence_return.dormancy_entered, true);
+  assert.equal(result.trace.at(-1), "monitor:dormant");
 });
