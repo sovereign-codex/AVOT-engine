@@ -52,6 +52,8 @@ export async function runCitPilot02Conduction(
     };
   }
 
+  // The monitor runtime has already completed its own bounded activation and entered
+  // dormancy. Pilot 02 begins a new conduction phase from that returned signal.
   trace.push("cit:bounded_inference_requested");
 
   const request: SovereignInferenceRequest = {
@@ -79,12 +81,18 @@ export async function runCitPilot02Conduction(
     throw new Error("cit_pilot_02:inference_authority_effect_violation");
   }
 
+  const inferenceStatus = inference.return_path.archivist.result.status;
+  if (inferenceStatus !== "completed") {
+    trace.push(`cit:bounded_inference_${inferenceStatus}`, "cit:dormant");
+    throw new Error(`cit_pilot_02:inference_not_completed:${inferenceStatus}`);
+  }
+
   const inferenceEvidence = inference.return_path.archivist.result.evidence_refs;
   if (inferenceEvidence.length === 0) {
     throw new Error("cit_pilot_02:missing_inference_evidence");
   }
 
-  trace.push("cit:bounded_inference_returned", "cit:council_handoff_prepared");
+  trace.push("cit:bounded_inference_returned", "cit:council_handoff_prepared", "cit:dormant");
 
   const evidenceReturn: EvidenceReturnV01 = {
     ...monitor.evidence_return,
