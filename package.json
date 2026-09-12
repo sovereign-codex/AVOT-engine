@@ -9,7 +9,8 @@
     "start": "node dist/cli.js",
     "validate": "node dist/cli.js",
     "run": "node dist/cli.js",
-    "test": "npm run build && node --test dist/inference/*.test.js dist/runtime/*.test.js"
+    "test": "npm run build && node --test dist/inference/*.test.js dist/runtime/*.test.js",
+    "probe:local": "npm run build && node dist/inference/real-local-probe.js"
   },
   "dependencies": {
     "yaml": "^2.5.1"
