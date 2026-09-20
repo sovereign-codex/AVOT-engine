@@ -1,0 +1,162 @@
+{
+  "fixture_id": "ERA-AVOT-CIRCULATION-001",
+  "result": {
+    "monitor_signal": {
+      "signal_id": "signal:era-avot-circulation-001",
+      "monitor_id": "monitor-era-circulation-001",
+      "participant_id": "avot-era-circulation",
+      "observed_at": "2026-09-20T17:00:00Z",
+      "source_type": "synthetic_fixture",
+      "source_refs": [
+        "evidence:era-avot-circulation-source-001"
+      ],
+      "subject": "Synthetic institutional coherence signal",
+      "summary": "A synthetic signal for current-main Engine and Archivist circulation testing.",
+      "novelty_score": 0.8,
+      "confidence": 0.9,
+      "material_change": true,
+      "related_objectives": [
+        "era-avot-circulation-001"
+      ],
+      "related_repositories": [
+        "AVOT-engine",
+        "AVOT-ARCHIVIST"
+      ],
+      "related_notion_surfaces": [
+        "ERA_RESTAGING_DESIGN_001"
+      ],
+      "contradicts_prior_assumption": false,
+      "contradiction_refs": [],
+      "institutional_significance": "Requires bounded institutional interpretation.",
+      "recommended_receiver": "Knowledge Curator",
+      "recommended_disposition": "research_review",
+      "authority_posture": "analysis_only",
+      "institutional_effect": "none",
+      "evidence_refs": [
+        "evidence:era-avot-circulation-source-001"
+      ]
+    },
+    "inference": {
+      "request": {
+        "request_id": "monitor-conduction:era-avot-circulation-001",
+        "participant_id": "avot-era-circulation",
+        "work_ref": null,
+        "intent": "Interpret bounded monitor signal 'Synthetic institutional coherence signal' without institutional consequence.",
+        "input": "A synthetic signal for current-main Engine and Archivist circulation testing.",
+        "context_refs": [
+          "signal:era-avot-circulation-001",
+          "evidence:era-avot-circulation-source-001"
+        ],
+        "required_capabilities": [
+          "chat"
+        ],
+        "privacy_boundary": "local_only",
+        "authority_posture": "analysis_only",
+        "max_cost_class": "zero_marginal",
+        "latency_class": "interactive",
+        "evidence_required": true
+      },
+      "return_path": {
+        "archivist": {
+          "evidence_id": "inference:monitor-conduction:era-avot-circulation-001",
+          "request_id": "monitor-conduction:era-avot-circulation-001",
+          "plan": {
+            "request_id": "monitor-conduction:era-avot-circulation-001",
+            "target_capability": "local-chat",
+            "target_runtime": "era-test-runtime",
+            "target_model": "era-test-model",
+            "target_node": "era-test-node",
+            "strategy": "direct",
+            "privacy_boundary": "local_only",
+            "authority_posture": "analysis_only",
+            "route_reason": "Synthetic fixture route.",
+            "fallback_plan": []
+          },
+          "request": {
+            "intent": "Interpret bounded monitor signal 'Synthetic institutional coherence signal' without institutional consequence.",
+            "privacy_boundary": "local_only",
+            "authority_posture": "analysis_only",
+            "work_ref": null
+          },
+          "result": {
+            "request_id": "monitor-conduction:era-avot-circulation-001",
+            "status": "completed",
+            "output": "synthetic completed analysis return",
+            "capability_used": "local-chat",
+            "runtime_used": "era-test-runtime",
+            "model_used": "era-test-model",
+            "node_refs": [
+              "era-test-node"
+            ],
+            "verification": {
+              "required": false,
+              "status": "not_required"
+            },
+            "provenance_refs": [
+              "runtime:era-test-runtime"
+            ],
+            "evidence_refs": [
+              "evidence:era-completed-001"
+            ],
+            "authority_effect": "analysis_return"
+          },
+          "captured_at": "2026-09-20T17:00:00.000Z"
+        },
+        "trace": {
+          "trace_id": "inference:monitor-conduction:era-avot-circulation-001",
+          "repo": "sovereign-codex/AVOT-engine",
+          "workflow": "sovereign-inference/direct/era-test-runtime",
+          "status": "completed",
+          "timestamp": "2026-09-20T17:00:00.000Z"
+        }
+      }
+    },
+    "monitor_evidence_return": {
+      "activation_id": "activation:era-avot-circulation-001",
+      "participant_id": "avot-era-circulation",
+      "activation_event": "research_signal_observation:era-avot-circulation-001",
+      "started_at": "2026-09-20T17:00:00Z",
+      "completed_at": "2026-09-20T17:00:00Z",
+      "result": "material_signal",
+      "signal_refs": [
+        "signal:era-avot-circulation-001"
+      ],
+      "source_refs": [
+        "evidence:era-avot-circulation-source-001"
+      ],
+      "transform_refs": [
+        "transform:synthetic-monitor-v0"
+      ],
+      "error_refs": [],
+      "handoff_target": "cit-monitor-council",
+      "return_status": "returned",
+      "authority_posture": "analysis_only",
+      "institutional_effect": "none",
+      "dormancy_entered": true
+    },
+    "handoff": {
+      "target": "cit-monitor-council",
+      "authority_posture": "analysis_only",
+      "institutional_effect": "none",
+      "disposition": "ready_for_review",
+      "evidence_refs": [
+        "evidence:era-avot-circulation-source-001",
+        "evidence:era-completed-001"
+      ]
+    },
+    "trace": [
+      "monitor:dormant",
+      "monitor:awaken",
+      "monitor:context_bound",
+      "monitor:sensed",
+      "monitor:interpreted",
+      "monitor:signal_packet_emitted",
+      "monitor:handoff_recommended",
+      "monitor:evidence_returned",
+      "monitor:dormant",
+      "conduction:bounded_inference_requested",
+      "conduction:bounded_inference_completed",
+      "conduction:review_handoff_prepared"
+    ]
+  }
+}
