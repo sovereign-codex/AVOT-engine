@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import type { InferenceRuntimeAdapter } from "../inference/adapter.js";
@@ -225,5 +227,46 @@ test("completed inference without evidence fails closed", async () => {
   await assert.rejects(
     conductMonitorSignal(activation, [capability], [missingEvidence]),
     /missing required evidence references/,
+  );
+});
+
+
+test("shared fixture has the expected cross-repository identity and SHA-256", () => {
+  const fixtureUrl = new URL("../../fixtures/era-avot-circulation-001.completed.json", import.meta.url);
+  const raw = readFileSync(fixtureUrl);
+  const parsed = JSON.parse(raw.toString("utf8")) as {
+    fixture_id?: string;
+    result?: {
+      monitor_signal?: { signal_id?: string };
+      inference?: {
+        request?: { request_id?: string };
+        return_path?: {
+          archivist?: { evidence_id?: string };
+          trace?: { trace_id?: string };
+        };
+      };
+    };
+  };
+
+  assert.equal(parsed.fixture_id, "ERA-AVOT-CIRCULATION-001");
+  assert.equal(
+    parsed.result?.monitor_signal?.signal_id,
+    "signal:era-avot-circulation-001",
+  );
+  assert.equal(
+    parsed.result?.inference?.request?.request_id,
+    "monitor-conduction:era-avot-circulation-001",
+  );
+  assert.equal(
+    parsed.result?.inference?.return_path?.archivist?.evidence_id,
+    "inference:monitor-conduction:era-avot-circulation-001",
+  );
+  assert.equal(
+    parsed.result?.inference?.return_path?.trace?.trace_id,
+    "inference:monitor-conduction:era-avot-circulation-001",
+  );
+  assert.equal(
+    createHash("sha256").update(raw).digest("hex"),
+    "c4cbf55ea6035f3e8457064093f1c293543b08d9a0a0c0068973ef4aece550a8",
   );
 });
