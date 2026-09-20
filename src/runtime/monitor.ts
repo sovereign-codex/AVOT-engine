@@ -34,6 +34,7 @@ export interface SyntheticMonitorEvent {
   event_type: string;
   observed_at: string;
   source_ref: string;
+  evidence_ref?: string;
   subject: string;
   summary: string;
   material_change: boolean;
@@ -148,7 +149,7 @@ export function runSyntheticMonitorActivation(
       recommended_disposition: event.recommended_disposition ?? "office_review",
       authority_posture: "analysis_only",
       institutional_effect: "none",
-      evidence_refs: [event.source_ref],
+      evidence_refs: [event.evidence_ref ?? event.source_ref],
     };
     trace.push("monitor:signal_packet_emitted", "monitor:handoff_recommended");
   } else {

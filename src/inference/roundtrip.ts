@@ -15,10 +15,11 @@ export async function runSovereignInferenceRoundTrip(
   request: SovereignInferenceRequest,
   capabilities: InferenceCapability[],
   adapters: InferenceRuntimeAdapter[],
+  capturedAt?: string,
 ): Promise<SovereignInferenceRoundTrip> {
   const plan = routeInferenceRequest(request, capabilities);
   const result = await executeInferencePlan(request, plan, adapters);
-  const returnPath = buildInferenceReturnPath(request, plan, result);
+  const returnPath = buildInferenceReturnPath(request, plan, result, capturedAt);
 
   return {
     request,
