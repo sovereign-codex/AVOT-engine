@@ -40,7 +40,20 @@ For fixture event `era-avot-circulation-001`:
 - inference request: `monitor-conduction:era-avot-circulation-001`
 - inference evidence / TRACE identity: `inference:monitor-conduction:era-avot-circulation-001`
 
-The exact cross-repository artifact digest is established only after Archivist maps the emitted JSON bytes. Engine does not self-certify Archivist custody.
+The Engine test derives the committed fixture bytes from the current conduction implementation under a deterministic capture time, then pins SHA-256 `d1b20d1bd5571ff64902ff05dd163dd5648644497b401ce9e7028c42288b4c7e`. Archivist independently hashes and validates those exact bytes. Engine does not self-certify Archivist custody.
+
+## Provenance preservation
+
+The first fixture deliberately distinguishes:
+
+- raw source ref: `source:era-avot-circulation-raw-001`
+- derived signal evidence ref: `evidence:era-avot-circulation-derived-001`
+
+Both must survive into inference context and the final conduction handoff.
+
+## Stage-local handoff semantics
+
+`monitor_evidence_return.handoff_target` preserves the **pre-conduction monitor recommendation** as historical provenance. The top-level `handoff.target` is the **post-inference conduction recommendation**. Refused, degraded, and failed inference therefore preserve the earlier monitor recommendation while returning a null final conduction target.
 
 ## Non-goals
 

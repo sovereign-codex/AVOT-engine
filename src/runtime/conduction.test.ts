@@ -73,7 +73,8 @@ function event(materialChange = true): SyntheticMonitorEvent {
     event_id: "era-avot-circulation-001",
     event_type: "research_signal_observation",
     observed_at: "2026-09-20T17:00:00Z",
-    source_ref: "evidence:era-avot-circulation-source-001",
+    source_ref: "source:era-avot-circulation-raw-001",
+    evidence_ref: "evidence:era-avot-circulation-derived-001",
     subject: "Synthetic institutional coherence signal",
     summary: "A synthetic signal for current-main Engine and Archivist circulation testing.",
     material_change: materialChange,
@@ -126,7 +127,8 @@ test("material signal conducts through bounded inference and prepares a non-auth
   );
   assert.deepEqual(result.inference.request.context_refs, [
     "signal:era-avot-circulation-001",
-    "evidence:era-avot-circulation-source-001",
+    "source:era-avot-circulation-raw-001",
+    "evidence:era-avot-circulation-derived-001",
   ]);
   assert.equal(result.inference.request.work_ref, null);
   assert.equal(result.inference.request.authority_posture, "analysis_only");
@@ -139,7 +141,12 @@ test("material signal conducts through bounded inference and prepares a non-auth
   assert.equal(result.handoff.disposition, "ready_for_review");
   assert.ok(
     result.handoff.evidence_refs.includes(
-      "evidence:era-avot-circulation-source-001",
+      "source:era-avot-circulation-raw-001",
+    ),
+  );
+  assert.ok(
+    result.handoff.evidence_refs.includes(
+      "evidence:era-avot-circulation-derived-001",
     ),
   );
   assert.ok(
@@ -168,6 +175,10 @@ for (const status of ["refused", "degraded", "failed"] as const) {
 
     assert.ok(result.inference);
     assert.equal(result.inference.return_path.archivist.result.status, status);
+    assert.equal(
+      result.monitor_evidence_return.handoff_target,
+      "cit-monitor-council",
+    );
     assert.equal(result.handoff.target, null);
     assert.equal(result.handoff.institutional_effect, "none");
     assert.equal(result.handoff.disposition, `inference_${status}`);
@@ -231,15 +242,43 @@ test("completed inference without evidence fails closed", async () => {
 });
 
 
-test("shared fixture has the expected cross-repository identity and SHA-256", () => {
-  const fixtureUrl = new URL("../../fixtures/era-avot-circulation-001.completed.json", import.meta.url);
-  const raw = readFileSync(fixtureUrl);
-  const parsed = JSON.parse(raw.toString("utf8")) as {
-    fixture_id?: string;
+test("shared fixture is derived byte-for-byte from the current conduction implementation", async () => {
+  const activation = runSyntheticMonitorActivation(manifest, event(true));
+  const result = await conductMonitorSignal(
+    activation,
+    [capability],
+    [adapter("completed")],
+    "2026-09-20T17:00:00.000Z",
+  );
+
+  const derived = Buffer.from(
+    JSON.stringify(
+      {
+        fixture_id: "ERA-AVOT-CIRCULATION-001",
+        result,
+      },
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
+  const fixtureUrl = new URL(
+    "../../fixtures/era-avot-circulation-001.completed.json",
+    import.meta.url,
+  );
+  const committed = readFileSync(fixtureUrl);
+
+  assert.deepEqual(committed, derived);
+  assert.equal(
+    createHash("sha256").update(derived).digest("hex"),
+    "d1b20d1bd5571ff64902ff05dd163dd5648644497b401ce9e7028c42288b4c7e",
+  );
+
+  const parsed = JSON.parse(derived.toString("utf8")) as {
     result?: {
-      monitor_signal?: { signal_id?: string };
+      monitor_signal?: { source_refs?: string[]; evidence_refs?: string[] };
       inference?: {
-        request?: { request_id?: string };
+        request?: { context_refs?: string[] };
         return_path?: {
           archivist?: { evidence_id?: string };
           trace?: { trace_id?: string };
@@ -247,16 +286,17 @@ test("shared fixture has the expected cross-repository identity and SHA-256", ()
       };
     };
   };
-
-  assert.equal(parsed.fixture_id, "ERA-AVOT-CIRCULATION-001");
-  assert.equal(
-    parsed.result?.monitor_signal?.signal_id,
+  assert.deepEqual(parsed.result?.monitor_signal?.source_refs, [
+    "source:era-avot-circulation-raw-001",
+  ]);
+  assert.deepEqual(parsed.result?.monitor_signal?.evidence_refs, [
+    "evidence:era-avot-circulation-derived-001",
+  ]);
+  assert.deepEqual(parsed.result?.inference?.request?.context_refs, [
     "signal:era-avot-circulation-001",
-  );
-  assert.equal(
-    parsed.result?.inference?.request?.request_id,
-    "monitor-conduction:era-avot-circulation-001",
-  );
+    "source:era-avot-circulation-raw-001",
+    "evidence:era-avot-circulation-derived-001",
+  ]);
   assert.equal(
     parsed.result?.inference?.return_path?.archivist?.evidence_id,
     "inference:monitor-conduction:era-avot-circulation-001",
@@ -264,9 +304,5 @@ test("shared fixture has the expected cross-repository identity and SHA-256", ()
   assert.equal(
     parsed.result?.inference?.return_path?.trace?.trace_id,
     "inference:monitor-conduction:era-avot-circulation-001",
-  );
-  assert.equal(
-    createHash("sha256").update(raw).digest("hex"),
-    "c4cbf55ea6035f3e8457064093f1c293543b08d9a0a0c0068973ef4aece550a8",
   );
 });

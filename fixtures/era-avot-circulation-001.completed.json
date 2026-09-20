@@ -8,7 +8,7 @@
       "observed_at": "2026-09-20T17:00:00Z",
       "source_type": "synthetic_fixture",
       "source_refs": [
-        "evidence:era-avot-circulation-source-001"
+        "source:era-avot-circulation-raw-001"
       ],
       "subject": "Synthetic institutional coherence signal",
       "summary": "A synthetic signal for current-main Engine and Archivist circulation testing.",
@@ -33,7 +33,7 @@
       "authority_posture": "analysis_only",
       "institutional_effect": "none",
       "evidence_refs": [
-        "evidence:era-avot-circulation-source-001"
+        "evidence:era-avot-circulation-derived-001"
       ]
     },
     "inference": {
@@ -45,7 +45,8 @@
         "input": "A synthetic signal for current-main Engine and Archivist circulation testing.",
         "context_refs": [
           "signal:era-avot-circulation-001",
-          "evidence:era-avot-circulation-source-001"
+          "source:era-avot-circulation-raw-001",
+          "evidence:era-avot-circulation-derived-001"
         ],
         "required_capabilities": [
           "chat"
@@ -69,7 +70,7 @@
             "strategy": "direct",
             "privacy_boundary": "local_only",
             "authority_posture": "analysis_only",
-            "route_reason": "Synthetic fixture route.",
+            "route_reason": "Selected local-chat: satisfies capability, privacy/trust, availability, cost, evidence, and strategy constraints.",
             "fallback_plan": []
           },
           "request": {
@@ -122,7 +123,7 @@
         "signal:era-avot-circulation-001"
       ],
       "source_refs": [
-        "evidence:era-avot-circulation-source-001"
+        "source:era-avot-circulation-raw-001"
       ],
       "transform_refs": [
         "transform:synthetic-monitor-v0"
@@ -140,7 +141,8 @@
       "institutional_effect": "none",
       "disposition": "ready_for_review",
       "evidence_refs": [
-        "evidence:era-avot-circulation-source-001",
+        "source:era-avot-circulation-raw-001",
+        "evidence:era-avot-circulation-derived-001",
         "evidence:era-completed-001"
       ]
     },

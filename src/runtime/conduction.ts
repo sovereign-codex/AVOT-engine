@@ -52,6 +52,7 @@ export async function conductMonitorSignal(
   activation: MonitorActivationResult,
   capabilities: InferenceCapability[],
   adapters: InferenceRuntimeAdapter[],
+  capturedAt?: string,
 ): Promise<MonitorConductionResult> {
   const trace = [...activation.trace];
 
@@ -81,7 +82,11 @@ export async function conductMonitorSignal(
     work_ref: null,
     intent: `Interpret bounded monitor signal '${signal.subject}' without institutional consequence.`,
     input: signal.summary,
-    context_refs: unique([signal.signal_id, ...signal.evidence_refs]),
+    context_refs: unique([
+      signal.signal_id,
+      ...signal.source_refs,
+      ...signal.evidence_refs,
+    ]),
     required_capabilities: ["chat"],
     privacy_boundary: "local_only" as const,
     authority_posture: "analysis_only" as const,
@@ -94,6 +99,7 @@ export async function conductMonitorSignal(
     request,
     capabilities,
     adapters,
+    capturedAt,
   );
 
   const archive = inference.return_path.archivist;
@@ -106,7 +112,11 @@ export async function conductMonitorSignal(
     throw new Error("monitor_conduction:authority_effect_violation");
   }
 
-  const requiredContext = [signal.signal_id, ...signal.evidence_refs];
+  const requiredContext = [
+    signal.signal_id,
+    ...signal.source_refs,
+    ...signal.evidence_refs,
+  ];
   for (const ref of requiredContext) {
     if (!request.context_refs?.includes(ref)) {
       throw new Error(`monitor_conduction:missing_context_ref:${ref}`);
@@ -114,6 +124,7 @@ export async function conductMonitorSignal(
   }
 
   const evidenceRefs = unique([
+    ...signal.source_refs,
     ...signal.evidence_refs,
     ...result.evidence_refs,
   ]);
