@@ -1,0 +1,44 @@
+name: CIT Pilot 02 Conduction
+
+on:
+  pull_request:
+    paths:
+      - "src/runtime/conduction.ts"
+      - "src/runtime/conduction.test.ts"
+      - "src/runtime/index.ts"
+      - "src/inference/**"
+      - "docs/CIT_PILOT_02_PERCEPTION_INFERENCE_CONDUCTION.md"
+      - "package.json"
+      - ".github/workflows/cit-pilot-02-conduction.yml"
+  push:
+    branches:
+      - "cit-pilot-02-perception-inference-conduction"
+    paths:
+      - "src/runtime/conduction.ts"
+      - "src/runtime/conduction.test.ts"
+      - "src/runtime/index.ts"
+      - "src/inference/**"
+      - "docs/CIT_PILOT_02_PERCEPTION_INFERENCE_CONDUCTION.md"
+      - "package.json"
+      - ".github/workflows/cit-pilot-02-conduction.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  conduction-proof:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and run full test suite
+        run: npm test
