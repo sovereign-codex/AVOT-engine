@@ -1,0 +1,8 @@
+{
+  "schema_version": "avot-receiver-policy/1",
+  "enabled": false,
+  "ledger_branch": "main",
+  "allowed_dispatch_sender_ids": [],
+  "upstream_policy_sha256": null,
+  "receiver_source_sha256": null
+}

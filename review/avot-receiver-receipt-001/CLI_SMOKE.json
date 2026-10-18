@@ -1,0 +1,129 @@
+{
+  "schema_version": "avot-receiver-cli-smoke/1",
+  "started_at": "2026-10-18T05:55:46.809Z",
+  "completed_at": "2026-10-18T05:55:46.871Z",
+  "node_version": "v24.19.0",
+  "result": "passed",
+  "policy_enabled": false,
+  "fixture_scope": "Local non-admitted receiver event under disabled checked-in policy, with absent commit/workflow context; this smoke does not claim authenticated upstream admission.",
+  "credentials": "Relevant token variables replaced with empty strings without reading inherited values.",
+  "transport_guard": "globalThis.fetch rejects and counts every attempted call; no transport calls occurred.",
+  "runtime_source_fingerprint": "dfd180f83362a1095b60eaf742a023fea355976a4363c7a3cf2cf9fd98fbe058",
+  "cases": [
+    {
+      "command": [
+        "node",
+        "scripts/receiver/run.mjs",
+        "prepare"
+      ],
+      "exit_code": 1,
+      "ready": false,
+      "output_exact": true,
+      "disposition": "hold",
+      "prepared_disposition": "hold",
+      "issue_codes": [
+        "policy_disabled",
+        "upstream_policy_unpinned",
+        "receiver_source_unpinned",
+        "sender_not_allowed",
+        "invalid_observation",
+        "invalid_handoff_metadata"
+      ],
+      "event_bytes": 462,
+      "event_sha256": "9c6be28026dad4679a64391aec8230eeba94860250115f13930b2a940ad3ee98",
+      "preserved_event_sha256": "9c6be28026dad4679a64391aec8230eeba94860250115f13930b2a940ad3ee98",
+      "exact_event_bytes_preserved": true,
+      "network_attempts": 0,
+      "execution": {
+        "completion_claim": false,
+        "status": "unverified"
+      },
+      "observation": null,
+      "passed": true
+    },
+    {
+      "command": [
+        "node",
+        "scripts/receiver/run.mjs",
+        "execute"
+      ],
+      "exit_code": 1,
+      "ready": false,
+      "output_exact": true,
+      "disposition": "hold",
+      "prepared_disposition": "hold",
+      "issue_codes": [
+        "policy_disabled",
+        "upstream_policy_unpinned",
+        "receiver_source_unpinned",
+        "sender_not_allowed",
+        "invalid_observation",
+        "invalid_handoff_metadata"
+      ],
+      "event_bytes": 462,
+      "event_sha256": "9c6be28026dad4679a64391aec8230eeba94860250115f13930b2a940ad3ee98",
+      "preserved_event_sha256": "9c6be28026dad4679a64391aec8230eeba94860250115f13930b2a940ad3ee98",
+      "exact_event_bytes_preserved": true,
+      "network_attempts": 0,
+      "execution": {
+        "completion_claim": false,
+        "status": "unverified"
+      },
+      "observation": null,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "network_attempts": 0
+  },
+  "tested_files": [
+    {
+      "path": ".github/workflows/avot-engine-receiver.yml",
+      "bytes": 1986,
+      "sha256": "099ef82018707a938620be77a05d2108d11df301e24124f37d81e51126b7f072"
+    },
+    {
+      "path": ".github/workflows/avot-receiver-contract.yml",
+      "bytes": 1146,
+      "sha256": "5d18c9c1bf83777e7313b3d76b6ef3092457f462e3c67018ad5c76d9311a4eba"
+    },
+    {
+      "path": "config/avot-receiver.json",
+      "bytes": 201,
+      "sha256": "57cf7d65fdbcb227d9d0c1bb516763e79da83557cc2f9c3ccaea25931c6d0dab"
+    },
+    {
+      "path": "scripts/receiver/contract.mjs",
+      "bytes": 18042,
+      "sha256": "b27f2d21111ef10e1cee34008d1e4d41ea0617482ef0d7648bd03a56c26131d6"
+    },
+    {
+      "path": "scripts/receiver/encoding.mjs",
+      "bytes": 3496,
+      "sha256": "f9e4054ee9bd2b69f6631f1ea1f3b8d5969fca09287016cc929a432658b16316"
+    },
+    {
+      "path": "scripts/receiver/executor.mjs",
+      "bytes": 8189,
+      "sha256": "a6dc65db803c71e72b1e336eb6ad8cea6bf4b64262933b185be6eb5fde9ecdaf"
+    },
+    {
+      "path": "scripts/receiver/github-service.mjs",
+      "bytes": 6514,
+      "sha256": "4fb3bc2791b2ac715569addab78eeb7608b2a55584dcc7cce1f6f991b1af1010"
+    },
+    {
+      "path": "scripts/receiver/run.mjs",
+      "bytes": 5822,
+      "sha256": "f650770eee5f6bc2e40da223822d4bcb4b92694372686fa4a33e3e6926196fbb"
+    }
+  ],
+  "tested_files_unchanged": true,
+  "excluded_generated_state": [
+    ".receiver-state/"
+  ],
+  "temporary_guard_files_removed": true
+}
