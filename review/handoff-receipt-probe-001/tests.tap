@@ -1,0 +1,379 @@
+TAP version 13
+# Subtest: portable CCC interoperability fixtures retain exactly the three pinned production modules
+ok 1 - portable CCC interoperability fixtures retain exactly the three pinned production modules
+  ---
+  duration_ms: 15.683535
+  type: 'test'
+  ...
+# Subtest: real pinned Router and Dispatcher modules produce an envelope the production Receiver records whole
+ok 2 - real pinned Router and Dispatcher modules produce an envelope the production Receiver records whole
+  ---
+  duration_ms: 26.616387
+  type: 'test'
+  ...
+# Subtest: producer, Router caller, and final Receiver sender are distinct principals
+ok 3 - producer, Router caller, and final Receiver sender are distinct principals
+  ---
+  duration_ms: 31.391446
+  type: 'test'
+  ...
+# Subtest: both rich producer fields and preserved wrapper extensions survive to the durable receipt
+ok 4 - both rich producer fields and preserved wrapper extensions survive to the durable receipt
+  ---
+  duration_ms: 13.313165
+  type: 'test'
+  ...
+# Subtest: Receiver admission requires both exact claims but does not wait for either transport outcome
+ok 5 - Receiver admission requires both exact claims but does not wait for either transport outcome
+  ---
+  duration_ms: 21.068688
+  type: 'test'
+  ...
+# Subtest: direct legacy producer events can pass the actual CCC normalization chain without content loss
+ok 6 - direct legacy producer events can pass the actual CCC normalization chain without content loss
+  ---
+  duration_ms: 7.61892
+  type: 'test'
+  ...
+# Subtest: disabled policy, empty sender scope, and missing or mismatched pins make zero service calls
+ok 7 - disabled policy, empty sender scope, and missing or mismatched pins make zero service calls
+  ---
+  duration_ms: 11.675431
+  type: 'test'
+  ...
+# Subtest: observed Receiver sender requires separate admission rather than trusting carried sender fields
+ok 8 - observed Receiver sender requires separate admission rather than trusting carried sender fields
+  ---
+  duration_ms: 6.211201
+  type: 'test'
+  ...
+# Subtest: Receiver source fingerprint covers exactly the fixed runtime files in deterministic order
+ok 9 - Receiver source fingerprint covers exactly the fixed runtime files in deterministic order
+  ---
+  duration_ms: 1.385307
+  type: 'test'
+  ...
+# Subtest: matching main commit, checkout, workflow, and source identities are mandatory
+ok 10 - matching main commit, checkout, workflow, and source identities are mandatory
+  ---
+  duration_ms: 19.152151
+  type: 'test'
+  ...
+# Subtest: run, attempt, main commit, formatting, and observation time do not alter the receipt identity or binding
+ok 11 - run, attempt, main commit, formatting, and observation time do not alter the receipt identity or binding
+  ---
+  duration_ms: 6.257579
+  type: 'test'
+  ...
+# Subtest: identity namespace is stable while different admitted Receiver senders bind differently
+ok 12 - identity namespace is stable while different admitted Receiver senders bind differently
+  ---
+  duration_ms: 7.911314
+  type: 'test'
+  ...
+# Subtest: caller identity cannot be absent, padded, replaced by trace identity, or contradicted inside event
+ok 13 - caller identity cannot be absent, padded, replaced by trace identity, or contradicted inside event
+  ---
+  duration_ms: 8.832674
+  type: 'test'
+  ...
+# Subtest: unknown contract versions, malformed metadata, and extra control keys are held
+ok 14 - unknown contract versions, malformed metadata, and extra control keys are held
+  ---
+  duration_ms: 10.193556
+  type: 'test'
+  ...
+# Subtest: changed producer fields or preserved wrapper content cannot retain the old content binding
+ok 15 - changed producer fields or preserved wrapper content cannot retain the old content binding
+  ---
+  duration_ms: 10.170305
+  type: 'test'
+  ...
+# Subtest: wrong outer action, repository, sender representation, or event shape yields structured holds
+ok 16 - wrong outer action, repository, sender representation, or event shape yields structured holds
+  ---
+  duration_ms: 6.456575
+  type: 'test'
+  ...
+# Subtest: strict event limits hold malformed, duplicate-key, lossy-number, oversized, and deeply nested data
+ok 17 - strict event limits hold malformed, duplicate-key, lossy-number, oversized, and deeply nested data
+  ---
+  duration_ms: 18.969314
+  type: 'test'
+  ...
+# Subtest: malformed policies cannot bypass exact schema and strict JSON requirements
+ok 18 - malformed policies cannot bypass exact schema and strict JSON requirements
+  ---
+  duration_ms: 25.935261
+  type: 'test'
+  ...
+# Subtest: receipt and claim paths are deterministic hashes with no producer-controlled path fragments
+ok 19 - receipt and claim paths are deterministic hashes with no producer-controlled path fragments
+  ---
+  duration_ms: 0.686579
+  type: 'test'
+  ...
+# Subtest: prepared envelopes are immutable and execution rejects fabricated or cloned ready objects
+ok 20 - prepared envelopes are immutable and execution rejects fabricated or cloned ready objects
+  ---
+  duration_ms: 6.025585
+  type: 'test'
+  ...
+# Subtest: malformed run identity values return structured holds before URL construction or service access
+ok 21 - malformed run identity values return structured holds before URL construction or service access
+  ---
+  duration_ms: 5.977144
+  type: 'test'
+  ...
+# Subtest: same request is duplicate after a new Receiver run and main commit with unchanged runtime code
+ok 22 - same request is duplicate after a new Receiver run and main commit with unchanged runtime code
+  ---
+  duration_ms: 12.175187
+  type: 'test'
+  ...
+# Subtest: concurrent Receiver runs produce one receipt and the loser verifies the existing receipt
+ok 23 - concurrent Receiver runs produce one receipt and the loser verifies the existing receipt
+  ---
+  duration_ms: 11.950582
+  type: 'test'
+  ...
+# Subtest: an existing caller identity with changed admitted sender binding is a collision without overwrite
+ok 24 - an existing caller identity with changed admitted sender binding is a collision without overwrite
+  ---
+  duration_ms: 11.412858
+  type: 'test'
+  ...
+# Subtest: missing either Router or Dispatcher claim holds before any receipt mutation
+ok 25 - missing either Router or Dispatcher claim holds before any receipt mutation
+  ---
+  duration_ms: 8.955897
+  type: 'test'
+  ...
+# Subtest: claim blob integrity, exact request hash, version, and binding are all checked independently
+ok 26 - claim blob integrity, exact request hash, version, and binding are all checked independently
+  ---
+  duration_ms: 128.401169
+  type: 'test'
+  ...
+# Subtest: internally plausible upstream observation edits still fail exact persisted claim verification
+ok 27 - internally plausible upstream observation edits still fail exact persisted claim verification
+  ---
+  duration_ms: 15.797372
+  type: 'test'
+  ...
+# Subtest: unavailable or malformed claim reads hold with no receipt mutation
+ok 28 - unavailable or malformed claim reads hold with no receipt mutation
+  ---
+  duration_ms: 22.674588
+  type: 'test'
+  ...
+# Subtest: non-created receipt responses with no verified readback are uncertain and never retried
+ok 29 - non-created receipt responses with no verified readback are uncertain and never retried
+  ---
+  duration_ms: 31.317958
+  type: 'test'
+  ...
+# Subtest: wrong or missing 201 blob identity grants no new-record claim but valid readback can prove duplicate
+ok 30 - wrong or missing 201 blob identity grants no new-record claim but valid readback can prove duplicate
+  ---
+  duration_ms: 14.658027
+  type: 'test'
+  ...
+# Subtest: a lost create response after commit is resolved by one verified readback without another write
+ok 31 - a lost create response after commit is resolved by one verified readback without another write
+  ---
+  duration_ms: 9.492699
+  type: 'test'
+  ...
+# Subtest: unresolved write and readback ambiguity remains uncertain with no receipt or completion claim
+ok 32 - unresolved write and readback ambiguity remains uncertain with no receipt or completion claim
+  ---
+  duration_ms: 4.681953
+  type: 'test'
+  ...
+# Subtest: corrupted existing receipts cannot be promoted to verified duplicate or completion
+ok 33 - corrupted existing receipts cannot be promoted to verified duplicate or completion
+  ---
+  duration_ms: 42.720847
+  type: 'test'
+  ...
+# Subtest: a valid receipt for another request at this request path is uncertain rather than an identity collision
+ok 34 - a valid receipt for another request at this request path is uncertain rather than an identity collision
+  ---
+  duration_ms: 11.594157
+  type: 'test'
+  ...
+# Subtest: Receiver service exposes custody operations without a dispatch or execution method
+ok 35 - Receiver service exposes custody operations without a dispatch or execution method
+  ---
+  duration_ms: 4.914142
+  type: 'test'
+  ...
+# Subtest: CCC claims and AVOT receipts are read from fixed main paths with separate credentials
+ok 36 - CCC claims and AVOT receipts are read from fixed main paths with separate credentials
+  ---
+  duration_ms: 8.307547
+  type: 'test'
+  ...
+# Subtest: AVOT receipt creation is one canonical create-only PUT with no overwrite SHA
+ok 37 - AVOT receipt creation is one canonical create-only PUT with no overwrite SHA
+  ---
+  duration_ms: 1.267805
+  type: 'test'
+  ...
+# Subtest: non-success reads and non-created writes return status without guessing records or retrying
+ok 38 - non-success reads and non-created writes return status without guessing records or retrying
+  ---
+  duration_ms: 12.079812
+  type: 'test'
+  ...
+# Subtest: wrong or malformed 201 responses cannot prove receipt creation
+ok 39 - wrong or malformed 201 responses cannot prove receipt creation
+  ---
+  duration_ms: 3.418316
+  type: 'test'
+  ...
+# Subtest: successful reads require exact path, blob, strict UTF-8 JSON, and canonical bytes
+ok 40 - successful reads require exact path, blob, strict UTF-8 JSON, and canonical bytes
+  ---
+  duration_ms: 4.84746
+  type: 'test'
+  ...
+# Subtest: claim and receipt APIs cannot select outcomes, other files, repos, branches, or arbitrary URLs
+ok 41 - claim and receipt APIs cannot select outcomes, other files, repos, branches, or arbitrary URLs
+  ---
+  duration_ms: 1.1665
+  type: 'test'
+  ...
+# Subtest: fetch exceptions and redirects are rejected without retries or credential leakage
+ok 42 - fetch exceptions and redirects are rejected without retries or credential leakage
+  ---
+  duration_ms: 0.731987
+  type: 'test'
+  ...
+# Subtest: streamed response bound cancels oversized content without accepting a record
+ok 43 - streamed response bound cancels oversized content without accepting a record
+  ---
+  duration_ms: 0.858744
+  type: 'test'
+  ...
+# Subtest: invalid or oversized receipt data fails before a fetch
+ok 44 - invalid or oversized receipt data fails before a fetch
+  ---
+  duration_ms: 29.245127
+  type: 'test'
+  ...
+# Subtest: probe readback accepts the checked-in packet through real pinned CCC and AVOT modules, with capture still unverified
+ok 45 - probe readback accepts the checked-in packet through real pinned CCC and AVOT modules, with capture still unverified
+  ---
+  duration_ms: 20.549582
+  type: 'test'
+  ...
+# Subtest: probe readback pins producer, Router caller, and Receiver caller as three distinct principals
+ok 46 - probe readback pins producer, Router caller, and Receiver caller as three distinct principals
+  ---
+  duration_ms: 4.223705
+  type: 'test'
+  ...
+# Subtest: a completely coherent saved chain for another request cannot override the independently approved request
+ok 47 - a completely coherent saved chain for another request cannot override the independently approved request
+  ---
+  duration_ms: 22.738494
+  type: 'test'
+  ...
+# Subtest: a completely coherent chain with changed content cannot override the independently approved payload
+ok 48 - a completely coherent chain with changed content cannot override the independently approved payload
+  ---
+  duration_ms: 14.906227
+  type: 'test'
+  ...
+# Subtest: request and policy/source expectations are required outside the receipt
+ok 49 - request and policy/source expectations are required outside the receipt
+  ---
+  duration_ms: 6.43554
+  type: 'test'
+  ...
+# Subtest: independent policy snapshots must match their pins and authorize admission
+ok 50 - independent policy snapshots must match their pins and authorize admission
+  ---
+  duration_ms: 5.642882
+  type: 'test'
+  ...
+# Subtest: content, governance, runtime, and wrapper tampering fails even after recalculating receipt byte and blob hashes
+ok 51 - content, governance, runtime, and wrapper tampering fails even after recalculating receipt byte and blob hashes
+  ---
+  duration_ms: 39.655333
+  type: 'test'
+  ...
+# Subtest: each complete CCC claim is checked for identity, request, and observation integrity
+ok 52 - each complete CCC claim is checked for identity, request, and observation integrity
+  ---
+  duration_ms: 79.209013
+  type: 'test'
+  ...
+# Subtest: both CCC outcomes must link to the actual claim and show accepted HTTP 204 without completion
+ok 53 - both CCC outcomes must link to the actual claim and show accepted HTTP 204 without completion
+  ---
+  duration_ms: 109.774499
+  type: 'test'
+  ...
+# Subtest: all three saved Actions events and all five saved records are mandatory
+ok 54 - all three saved Actions events and all five saved records are mandatory
+  ---
+  duration_ms: 4.869794
+  type: 'test'
+  ...
+# Subtest: repository and path bindings reject valid-looking substitutions for claims, outcomes, and receipt
+ok 55 - repository and path bindings reject valid-looking substitutions for claims, outcomes, and receipt
+  ---
+  duration_ms: 51.506327
+  type: 'test'
+  ...
+# Subtest: independent saved-byte SHA256, Git blob identities, and commit identity syntax are checked
+ok 56 - independent saved-byte SHA256, Git blob identities, and commit identity syntax are checked
+  ---
+  duration_ms: 96.468563
+  type: 'test'
+  ...
+# Subtest: receipt execution, workflow provenance, and artifact-upload claims cannot be promoted
+ok 57 - receipt execution, workflow provenance, and artifact-upload claims cannot be promoted
+  ---
+  duration_ms: 23.621498
+  type: 'test'
+  ...
+# Subtest: the exact saved Actions bytes are checked even when changed whitespace preserves the parsed payload
+ok 58 - the exact saved Actions bytes are checked even when changed whitespace preserves the parsed payload
+  ---
+  duration_ms: 11.134463
+  type: 'test'
+  ...
+# Subtest: saved observations and actual outer senders must agree with records and independent expectations
+ok 59 - saved observations and actual outer senders must agree with records and independent expectations
+  ---
+  duration_ms: 32.808613
+  type: 'test'
+  ...
+# Subtest: duplicate decoded JSON keys inside saved events and records are rejected after honest byte rehashing
+ok 60 - duplicate decoded JSON keys inside saved events and records are rejected after honest byte rehashing
+  ---
+  duration_ms: 27.317276
+  type: 'test'
+  ...
+# Subtest: record serialization, base64, and UTF-8 must remain exact and valid
+ok 61 - record serialization, base64, and UTF-8 must remain exact and valid
+  ---
+  duration_ms: 12.983997
+  type: 'test'
+  ...
+# Subtest: oversized and deeply nested offline inputs hold without leaking a thrown parser error
+ok 62 - oversized and deeply nested offline inputs hold without leaking a thrown parser error
+  ---
+  duration_ms: 284.465973
+  type: 'test'
+  ...
+# Subtest: verification uses neither network transports nor the already-completed injected ledger services
+ok 63 - verification uses neither network transports nor the already-completed injected ledger services
+  ---
+  duration_ms: 15.011188
+  type: 'test'
+  ...

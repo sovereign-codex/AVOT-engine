@@ -6,6 +6,7 @@ on:
       - 'scripts/receiver/**'
       - 'config/avot-receiver.json'
       - 'tests/receiver/**'
+      - 'review/handoff-receipt-probe-001/**'
       - '.github/workflows/avot-engine-receiver.yml'
       - '.github/workflows/avot-receiver-contract.yml'
   push:
@@ -15,6 +16,7 @@ on:
       - 'scripts/receiver/**'
       - 'config/avot-receiver.json'
       - 'tests/receiver/**'
+      - 'review/handoff-receipt-probe-001/**'
       - '.github/workflows/avot-engine-receiver.yml'
       - '.github/workflows/avot-receiver-contract.yml'
 

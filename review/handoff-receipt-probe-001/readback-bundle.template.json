@@ -1,0 +1,150 @@
+{
+  "schema_version": "handoff-receipt-readback-bundle/1",
+  "expected": {
+    "route_event": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "body": {
+        "event_type": "route-event",
+        "client_payload": {
+          "request_id": "ccc-avot-receipt-probe-20261018-001",
+          "target": "avot-engine-runner",
+          "event": {
+            "trace_id": "trace-ccc-avot-receipt-probe-20261018-001",
+            "repo": "sovereign-codex/Codex-control-center",
+            "workflow": "handoff-receipt-probe-001",
+            "source_event": "manual_receipt_probe",
+            "status": "received",
+            "timestamp": "2026-10-18T06:10:05Z",
+            "payload": {
+              "purpose": "Verify complete handoff retention and attributable readback.",
+              "test_vector": {
+                "message": "Preserve café, Δ, and the full nested content.",
+                "numbers": [
+                  0,
+                  1,
+                  2.5
+                ],
+                "values": [
+                  false,
+                  null,
+                  "receipt only"
+                ],
+                "nested": {
+                  "preserve": true
+                }
+              }
+            },
+            "governance": {
+              "posture": "bounded_review_probe",
+              "execution_authorized": false
+            },
+            "runtime_packet": {
+              "packet_id": "packet-ccc-avot-receipt-probe-20261018-001",
+              "execution_state": "received"
+            },
+            "probe_extension": {
+              "preserve_event_extension": true
+            }
+          },
+          "probe_note": {
+            "preserve_wrapper_extension": true,
+            "execution_requested": false
+          }
+        }
+      }
+    },
+    "ccc_policy": null,
+    "receiver_policy": null,
+    "ccc_policy_sha256": null,
+    "receiver_policy_sha256": null,
+    "receiver_source_sha256": "dfd180f83362a1095b60eaf742a023fea355976a4363c7a3cf2cf9fd98fbe058",
+    "sender_ids": {
+      "router": null,
+      "dispatcher": null,
+      "receiver": null
+    }
+  },
+  "actions": {
+    "router": {
+      "bytes_base64": null,
+      "sha256": null,
+      "observation": {
+        "eventName": "repository_dispatch",
+        "repository": "sovereign-codex/Codex-control-center",
+        "runId": null,
+        "runAttempt": null,
+        "observedAt": null
+      }
+    },
+    "dispatcher": {
+      "bytes_base64": null,
+      "sha256": null,
+      "observation": {
+        "eventName": "repository_dispatch",
+        "repository": "sovereign-codex/Codex-control-center",
+        "runId": null,
+        "runAttempt": null,
+        "observedAt": null
+      }
+    },
+    "receiver": {
+      "bytes_base64": null,
+      "sha256": null,
+      "observation": {
+        "eventName": "repository_dispatch",
+        "repository": "sovereign-codex/AVOT-engine",
+        "runId": null,
+        "runAttempt": null,
+        "observedAt": null,
+        "ref": "refs/heads/main",
+        "commitSha": null,
+        "workflowSha": null,
+        "checkoutSha": null,
+        "workflowRef": "sovereign-codex/AVOT-engine/.github/workflows/avot-engine-receiver.yml@refs/heads/main",
+        "receiverSourceSha256": "dfd180f83362a1095b60eaf742a023fea355976a4363c7a3cf2cf9fd98fbe058"
+      }
+    }
+  },
+  "records": {
+    "router_claim": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "path": "handoff-ledger/v1/router/b47c319cc7e069bf1a3a175a90def3251bb62d8d68cce71307600a1472836a40/claim.json",
+      "commit_sha": null,
+      "blob_sha": null,
+      "sha256": null,
+      "bytes_base64": null
+    },
+    "router_outcome": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "path": "handoff-ledger/v1/router/b47c319cc7e069bf1a3a175a90def3251bb62d8d68cce71307600a1472836a40/outcome.json",
+      "commit_sha": null,
+      "blob_sha": null,
+      "sha256": null,
+      "bytes_base64": null
+    },
+    "dispatcher_claim": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "path": "handoff-ledger/v1/dispatcher/60c4f9a6ed10c5fab4353bf922025df24667766305c279c4d62fafeaa7ede85e/claim.json",
+      "commit_sha": null,
+      "blob_sha": null,
+      "sha256": null,
+      "bytes_base64": null
+    },
+    "dispatcher_outcome": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "path": "handoff-ledger/v1/dispatcher/60c4f9a6ed10c5fab4353bf922025df24667766305c279c4d62fafeaa7ede85e/outcome.json",
+      "commit_sha": null,
+      "blob_sha": null,
+      "sha256": null,
+      "bytes_base64": null
+    },
+    "receiver_receipt": {
+      "repository": "sovereign-codex/AVOT-engine",
+      "path": "receiver-receipts/v1/12e8944d71b706b96f42e777784ddc01829cbdbe2df8d681a085a6fe8ced6a19/receipt.json",
+      "commit_sha": null,
+      "blob_sha": null,
+      "sha256": null,
+      "bytes_base64": null
+    }
+  }
+}
