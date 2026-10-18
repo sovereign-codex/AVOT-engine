@@ -1,0 +1,30 @@
+{
+  "schema_version": "ccc-executable-test-fixture/1",
+  "source_repository": "sovereign-codex/Codex-control-center",
+  "source_commit": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+  "source_pull_request": 22,
+  "scope": "Exact production modules retained only as offline interoperability test fixtures; no production AVOT dependency.",
+  "files": [
+    {
+      "source_path": "scripts/handoff/contract.mjs",
+      "fixture_path": "contract.mjs",
+      "bytes": 17258,
+      "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9",
+      "git_blob_sha": "85da3d02ed356130c050eca4bced7b0de03fb7ac"
+    },
+    {
+      "source_path": "scripts/handoff/executor.mjs",
+      "fixture_path": "executor.mjs",
+      "bytes": 11119,
+      "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9",
+      "git_blob_sha": "2fc00cd59b04a13c68511920f47984b87df833a1"
+    },
+    {
+      "source_path": "scripts/handoff/normalization.mjs",
+      "fixture_path": "normalization.mjs",
+      "bytes": 16751,
+      "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a",
+      "git_blob_sha": "d747c6a2ccca50e06b8ea7981a4137807abb28c9"
+    }
+  ]
+}

@@ -8,213 +8,55 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: avot-engine-receiver
-  cancel-in-progress: false
-
 jobs:
   receive:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     steps:
-      - name: Log incoming dispatch
-        run: |
-          echo "=== AVOT ENGINE RECEIVED DISPATCH ==="
-          echo "Trace ID: ${{ github.event.client_payload.trace_id }}"
-          echo "Source: ${{ github.event.client_payload.source }}"
-          echo "Route: ${{ github.event.client_payload.route }}"
+      - name: Checkout event commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
 
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
 
-      - name: Generate GitHub App token
+      - name: Prepare and validate receiver policy
+        id: prepare
+        run: node scripts/receiver/run.mjs prepare
+
+      - name: Create read-only upstream claim token
+        if: steps.prepare.outputs.ready == 'true'
         id: app-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
           app-id: ${{ secrets.CODEX_APP_ID }}
           private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
           owner: sovereign-codex
-          repositories: |
-            AVOT-TRACE
-            Codex-control-center
-            avot-engine
+          repositories: Codex-control-center
+          permission-contents: read
 
-      - name: Set runtime variables
-        run: |
-          TRACE="${{ github.event.client_payload.trace_id }}"
-          SOURCE="${{ github.event.client_payload.source }}"
-          ROUTE="${{ github.event.client_payload.route }}"
-
-          if [ -z "$TRACE" ]; then
-            TRACE="trace_${GITHUB_RUN_ID}"
-          fi
-
-          if [ -z "$SOURCE" ]; then
-            SOURCE="unknown"
-          fi
-
-          if [ -z "$ROUTE" ]; then
-            ROUTE="unknown"
-          fi
-
-          echo "TRACE_ID=$TRACE" >> "$GITHUB_ENV"
-          echo "SOURCE_REPO=$SOURCE" >> "$GITHUB_ENV"
-          echo "ROUTE_NAME=$ROUTE" >> "$GITHUB_ENV"
-          echo "TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_ENV"
-
-      - name: Emit trace (received)
+      - name: Revalidate upstream claims and record receipt once
+        if: steps.prepare.outputs.ready == 'true'
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "{
-              \"event_type\": \"trace_log\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"avot-engine-receiver\",
-                \"status\": \"received\"
-              }
-            }"
+          CCC_CLAIM_READ_TOKEN: ${{ steps.app-token.outputs.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/receiver/run.mjs execute
 
-      - name: Ensure working directories
-        run: |
-          mkdir -p inputs/incoming
-          mkdir -p outputs/results
-
-      - name: Write incoming payload
-        run: |
-          FILE="inputs/incoming/${TRACE_ID}.json"
-
-          jq -n \
-            --arg trace_id "$TRACE_ID" \
-            --arg source "$SOURCE_REPO" \
-            --arg route "$ROUTE_NAME" \
-            --arg received_at "$TIMESTAMP" \
-            '{
-              trace_id: $trace_id,
-              source: $source,
-              route: $route,
-              received_at: $received_at,
-              status: "received"
-            }' > "$FILE"
-
-          echo "Wrote $FILE"
-
-      - name: Emit trace (stored)
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "{
-              \"event_type\": \"trace_log\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"avot-engine-receiver\",
-                \"status\": \"stored\"
-              }
-            }"
-
-      - name: Simulate AVOT execution
-        run: |
-          echo "Running AVOT engine logic for $TRACE_ID"
-          sleep 2
-
-          RESULT_FILE="outputs/results/${TRACE_ID}.json"
-
-          jq -n \
-            --arg trace_id "$TRACE_ID" \
-            --arg repo "$GITHUB_REPOSITORY" \
-            --arg completed_at "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
-            '{
-              trace_id: $trace_id,
-              repo: $repo,
-              status: "completed",
-              completed_at: $completed_at
-            }' > "$RESULT_FILE"
-
-          echo "Execution complete"
-          echo "Wrote $RESULT_FILE"
-
-      - name: Commit local receiver artifacts
-        run: |
-          git config user.name "codex-bot"
-          git config user.email "actions@github.com"
-
-          git pull origin main --rebase || echo "No remote changes"
-
-          git add inputs/incoming/ outputs/results/
-          git commit -m "AVOT engine execution ${TRACE_ID}" || echo "No changes"
-
-          git pull origin main --rebase || echo "No remote changes"
-
-          git push origin main
-
-      - name: Emit trace (engine complete)
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "{
-              \"event_type\": \"trace_log\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"avot-engine-receiver\",
-                \"status\": \"engine_completed\"
-              }
-            }"
-
-      - name: Send result back to Control Center
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          echo "Dispatching result for $TRACE_ID"
-
-          RESPONSE=$(curl -s -o response.txt -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/sovereign-codex/Codex-control-center/dispatches \
-            -d "{
-              \"event_type\": \"avot_result\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"status\": \"completed\",
-                \"source\": \"avot-engine\"
-              }
-            }")
-
-          echo "HTTP Status: $RESPONSE"
-          cat response.txt || true
-
-          if [ "$RESPONSE" = "204" ]; then
-            RESULT_STATUS="result_sent"
-          else
-            RESULT_STATUS="result_failed"
-          fi
-
-          echo "RESULT_STATUS=$RESULT_STATUS" >> "$GITHUB_ENV"
-
-      - name: Emit trace (result dispatch status)
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "{
-              \"event_type\": \"trace_log\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"avot-engine-receiver\",
-                \"status\": \"$RESULT_STATUS\"
-              }
-            }"
+      - name: Preserve receiver observations
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: avot-receiver-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .receiver-state/actions-event.json
+            .receiver-state/prepared.json
+            .receiver-state/result.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30

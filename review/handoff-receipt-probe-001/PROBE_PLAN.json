@@ -1,0 +1,305 @@
+{
+  "schema_version": "handoff-receipt-probe-plan/1",
+  "standing": "prepared_not_run",
+  "prepared_at": "2026-10-18T06:10:05Z",
+  "probe_id": "ccc-avot-receipt-probe-20261018-001",
+  "request": {
+    "file": "route-event.json",
+    "method": "POST",
+    "url": "https://api.github.com/repos/sovereign-codex/Codex-control-center/dispatches",
+    "bytes": 1215,
+    "file_sha256": "fa712a0abe0f5dbf210047d2b9f6f598954164c8a68348929cd129a094f17345",
+    "canonical_body_sha256": "bcbfd01e54b99c4676c49b99f8a75017a9d90183f300fe23cc39f6e78e3cf8eb",
+    "source_input_sha256": "a0e307083d71272faea2978a936ebf384dc5ee758c8c847265dd94d4dea9fed7",
+    "normalized_content_sha256": "28353ca150c2dbaf618cd09a4f5295e163231926ff85fac84b37780ed4eec0f8"
+  },
+  "identity": {
+    "request_id": "ccc-avot-receipt-probe-20261018-001",
+    "source_repo": "sovereign-codex/Codex-control-center",
+    "source_workflow": "handoff-receipt-probe-001",
+    "producer_workflow_execution_verified": false
+  },
+  "reviewed_sources": {
+    "control_center": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "commit": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+      "files": [
+        {
+          "path": ".github/workflows/control-center-router.yml",
+          "bytes": 1892,
+          "sha256": "9f3c33e67a58c4bf5043edbd4c86cb94cea0ad6ab36e4e6d74ace013d93ed926",
+          "git_blob_sha": "12cee1137514f49c886ecb4aae99bf90673f4545"
+        },
+        {
+          "path": ".github/workflows/cross-repo-dispatch.yml",
+          "bytes": 1905,
+          "sha256": "dd83c411f6d3a403b939a9f749813c6cae37bc9e0aa4e001616c3e1e78c234d1",
+          "git_blob_sha": "0425c0a3d2fbbb92aa005394ca905760d778add9"
+        },
+        {
+          "path": "scripts/handoff/contract.mjs",
+          "bytes": 17258,
+          "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9",
+          "git_blob_sha": "85da3d02ed356130c050eca4bced7b0de03fb7ac"
+        },
+        {
+          "path": "scripts/handoff/executor.mjs",
+          "bytes": 11119,
+          "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9",
+          "git_blob_sha": "2fc00cd59b04a13c68511920f47984b87df833a1"
+        },
+        {
+          "path": "scripts/handoff/github-service.mjs",
+          "bytes": 7410,
+          "sha256": "f951cf24786d94f2c0aa12e8297355e1aa7e9be49d9a31de02f8260f6f43c4a5",
+          "git_blob_sha": "cdecdd7a2da97fb2f87d15374acc8beeeb239c30"
+        },
+        {
+          "path": "scripts/handoff/normalization.mjs",
+          "bytes": 16751,
+          "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a",
+          "git_blob_sha": "d747c6a2ccca50e06b8ea7981a4137807abb28c9"
+        },
+        {
+          "path": "scripts/handoff/run.mjs",
+          "bytes": 4191,
+          "sha256": "0acbf28b8d0f86880a2da3e5468b8ed6a6b63c33ebeed49c0528d5ee005e714f",
+          "git_blob_sha": "509ed9eb50fdbdd1c33cbe3e1f10a84fd5a8dc7d"
+        }
+      ]
+    },
+    "avot_receiver": {
+      "repository": "sovereign-codex/AVOT-engine",
+      "commit": "92a39ec137429aafb8eab559731086647fc067e2",
+      "receiver_source_sha256": "dfd180f83362a1095b60eaf742a023fea355976a4363c7a3cf2cf9fd98fbe058",
+      "files": [
+        {
+          "path": ".github/workflows/avot-engine-receiver.yml",
+          "bytes": 1986,
+          "sha256": "099ef82018707a938620be77a05d2108d11df301e24124f37d81e51126b7f072",
+          "git_blob_sha": "c43bbbabe52b180677acdb3fb5bccbdf9da5c0e3"
+        },
+        {
+          "path": "scripts/receiver/contract.mjs",
+          "bytes": 18042,
+          "sha256": "b27f2d21111ef10e1cee34008d1e4d41ea0617482ef0d7648bd03a56c26131d6",
+          "git_blob_sha": "91dd7014986251309f262c0fc71fd98acd0f83c4"
+        },
+        {
+          "path": "scripts/receiver/encoding.mjs",
+          "bytes": 3496,
+          "sha256": "f9e4054ee9bd2b69f6631f1ea1f3b8d5969fca09287016cc929a432658b16316",
+          "git_blob_sha": "ef10ce1f72f5760297774b37fed76ca23b694d31"
+        },
+        {
+          "path": "scripts/receiver/executor.mjs",
+          "bytes": 8189,
+          "sha256": "a6dc65db803c71e72b1e336eb6ad8cea6bf4b64262933b185be6eb5fde9ecdaf",
+          "git_blob_sha": "61baa9ee051dfc4812cd3808bc68d06ea7b1d3b7"
+        },
+        {
+          "path": "scripts/receiver/github-service.mjs",
+          "bytes": 6514,
+          "sha256": "4fb3bc2791b2ac715569addab78eeb7608b2a55584dcc7cce1f6f991b1af1010",
+          "git_blob_sha": "356ecab0cdc3537789ba1254a52b2f27284a8be3"
+        },
+        {
+          "path": "scripts/receiver/run.mjs",
+          "bytes": 5822,
+          "sha256": "f650770eee5f6bc2e40da223822d4bcb4b92694372686fa4a33e3e6926196fbb",
+          "git_blob_sha": "fbbfd7f1cb0d59a833912f367827bf779bcbb724"
+        }
+      ]
+    }
+  },
+  "observed_baseline": {
+    "checked_at": "2026-10-18T06:08:07Z",
+    "ccc_main": "4a5def9816bdb6c771559f3105558578edd284c1",
+    "avot_main": "dea4b3f0c05334f8abd33ac4c2abae76b094e6f4",
+    "ccc_candidate_pr": 21,
+    "ccc_candidate_head": "4ff3b9ab14ecb8582c6129252424ac677ac0f9db",
+    "ccc_integration_pr": 22,
+    "ccc_integration_head": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+    "avot_receiver_pr": 18,
+    "avot_receiver_head": "92a39ec137429aafb8eab559731086647fc067e2",
+    "all_draft": true,
+    "main_branch_metadata_protected": {
+      "control_center": false,
+      "avot_receiver": false
+    },
+    "visible_rulesets_with_parents": {
+      "control_center": [],
+      "avot_receiver": []
+    },
+    "branch_protection_details": "403_administration_access_unavailable",
+    "live_token_capability_verified": false
+  },
+  "records": {
+    "router_claim": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "branch": "main",
+      "path": "handoff-ledger/v1/router/b47c319cc7e069bf1a3a175a90def3251bb62d8d68cce71307600a1472836a40/claim.json",
+      "required_before_dispatch": "absent",
+      "required_after_probe": "exact_canonical_record_and_blob_verified"
+    },
+    "router_outcome": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "branch": "main",
+      "path": "handoff-ledger/v1/router/b47c319cc7e069bf1a3a175a90def3251bb62d8d68cce71307600a1472836a40/outcome.json",
+      "required_before_dispatch": "absent",
+      "required_after_probe": "exact_canonical_record_and_blob_verified"
+    },
+    "dispatcher_claim": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "branch": "main",
+      "path": "handoff-ledger/v1/dispatcher/60c4f9a6ed10c5fab4353bf922025df24667766305c279c4d62fafeaa7ede85e/claim.json",
+      "required_before_dispatch": "absent",
+      "required_after_probe": "exact_canonical_record_and_blob_verified"
+    },
+    "dispatcher_outcome": {
+      "repository": "sovereign-codex/Codex-control-center",
+      "branch": "main",
+      "path": "handoff-ledger/v1/dispatcher/60c4f9a6ed10c5fab4353bf922025df24667766305c279c4d62fafeaa7ede85e/outcome.json",
+      "required_before_dispatch": "absent",
+      "required_after_probe": "exact_canonical_record_and_blob_verified"
+    },
+    "receiver_receipt": {
+      "repository": "sovereign-codex/AVOT-engine",
+      "branch": "main",
+      "path": "receiver-receipts/v1/12e8944d71b706b96f42e777784ddc01829cbdbe2df8d681a085a6fe8ced6a19/receipt.json",
+      "required_before_dispatch": "absent",
+      "required_after_probe": "exact_canonical_record_and_blob_verified"
+    }
+  },
+  "maximum_attempts_for_this_request": {
+    "initiator_repository_dispatch": 1,
+    "router_repository_dispatch": 1,
+    "dispatcher_repository_dispatch": 1,
+    "ccc_claim_creates": 2,
+    "ccc_outcome_creates": 2,
+    "avot_receipt_creates": 1,
+    "app_token_requests": 3,
+    "model_or_inference_calls": 0,
+    "trace_or_result_callbacks": 0
+  },
+  "operator_window": {
+    "maximum_minutes": 15,
+    "starts": "immediately_before_first_AVOT_policy_activation",
+    "one_request_limit_enforced_by_runtime": false,
+    "expiration_enforced_by_runtime": false,
+    "shutdown": "disable_CCC_after_terminal_probe_or_timeout_then_disable_AVOT; inspect_already_queued_or_running_snapshot_jobs",
+    "automatic_retry": false,
+    "delete_or_reclaim_records": false,
+    "disable_changes_prepared_before_activation": true,
+    "record_each_enable_and_disable_commit_and_time": true,
+    "queue_delay_bounded_by_job_timeout": false
+  },
+  "required_live_inputs": {
+    "sender_ids": {
+      "router": null,
+      "dispatcher": null,
+      "receiver": null
+    },
+    "ccc_policy_sha256": null,
+    "receiver_policy_sha256": null,
+    "ccc_activation_commit": null,
+    "avot_activation_commit": null,
+    "credential_scope_evidence": null,
+    "execution_authorization": null
+  },
+  "deferred_until_observed": [
+    "real Actions run IDs and attempts",
+    "exact Actions event file hashes",
+    "delivery-specific outbound request hashes",
+    "claim, outcome and receipt blob SHAs",
+    "record readback commit SHAs; creation commit SHAs only when returned by writes",
+    "verified artifact downloads",
+    "workflow completion and readback evidence"
+  ],
+  "probe_success_requires": [
+    "all_three_expected_runs_complete_successfully",
+    "both_CCC_outcomes_record_accepted_204",
+    "both_CCC_claims_and_entire_AVOT_receipt_match_exact_request_and_policy",
+    "offline_readback_bundle_verified",
+    "independently_retrieved_GitHub_commits_runs_and_artifacts_match_bundle",
+    "current_main_readback_matches_pinned_records",
+    "both_reviewed_policies_disabled_after_probe"
+  ],
+  "execution": {
+    "status": "unverified",
+    "completion_claim": false
+  },
+  "historical_sender_evidence": {
+    "checked_at": "2026-10-18T06:17:07Z",
+    "standing": "historical_actor_metadata_only_not_current_sender_admission",
+    "actor_login": "codex-net-orchestrator[bot]",
+    "actor_id": 273616379,
+    "all_live_sender_fields_remain_unset": true,
+    "latest_runs": {
+      "router": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "id": 31564892722,
+        "created_at": "2026-08-12T04:56:34Z",
+        "retained_artifacts": 0
+      },
+      "dispatcher": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "id": 25288854858,
+        "created_at": "2026-05-03T19:39:55Z",
+        "retained_artifacts": 0
+      },
+      "receiver": {
+        "repository": "sovereign-codex/AVOT-engine",
+        "id": 25288860454,
+        "created_at": "2026-05-03T19:40:09Z",
+        "retained_artifacts": 0
+      }
+    },
+    "boundary": "Historical actor metadata without exact Actions event captures and a current credential mapping cannot establish the three present sender admissions."
+  },
+  "reviewed_disabled_policies": {
+    "control_center": {
+      "reviewed_commit": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+      "path": "config/control-center-handoff.json",
+      "bytes": 337,
+      "sha256": "9a10c70b397f03f04e3972dde1cd0cd3df5298854d0b8859962c81c8efc55b09",
+      "git_blob_sha": "febfe44f69ca1c0c02c5394d5edfafb163a939a5",
+      "canonical_sha256": "872f49fc665afeb301204b9c924bad3ce2e66204dc2942ca3d64ec04edb0f297",
+      "policy": {
+        "schema_version": "ccc-handoff-policy/1",
+        "enabled": false,
+        "ledger_branch": "main",
+        "producer_bindings": [],
+        "dispatcher_sender_ids": [],
+        "receiver": {
+          "repository": "sovereign-codex/AVOT-engine",
+          "event_type": "avot_execution",
+          "compatible": false,
+          "verified_commit": null,
+          "evidence_ref": null
+        }
+      }
+    },
+    "avot_receiver": {
+      "reviewed_commit": "92a39ec137429aafb8eab559731086647fc067e2",
+      "path": "config/avot-receiver.json",
+      "bytes": 201,
+      "sha256": "57cf7d65fdbcb227d9d0c1bb516763e79da83557cc2f9c3ccaea25931c6d0dab",
+      "git_blob_sha": "0b909340619f4ad4519c1aace97fdc72366de2b5",
+      "canonical_sha256": "585b1f39a90643dd15fa4229db501d23c592726499d8f8f04d45acf2df7a0300",
+      "policy": {
+        "schema_version": "avot-receiver-policy/1",
+        "enabled": false,
+        "ledger_branch": "main",
+        "allowed_dispatch_sender_ids": [],
+        "upstream_policy_sha256": null,
+        "receiver_source_sha256": null
+      }
+    }
+  },
+  "policy_transition_budget": {
+    "enabled_policy_changes": 2,
+    "disabled_policy_restorations": 2,
+    "scope": "separate_from_application_record_and_dispatch_budget; preserve all intervening ledger commits"
+  }
+}

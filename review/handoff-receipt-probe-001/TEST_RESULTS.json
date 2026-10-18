@@ -1,0 +1,157 @@
+{
+  "schema_version": "handoff-receipt-probe-tests/1",
+  "source_baseline_commit": "92a39ec137429aafb8eab559731086647fc067e2",
+  "pinned_ccc_fixture_commit": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+  "started_at": "2026-10-18T06:16:23.576147+00:00",
+  "completed_at": "2026-10-18T06:16:26.031092+00:00",
+  "node_version": "v24.19.0",
+  "command": [
+    "node",
+    "--test",
+    "--test-isolation=none",
+    "--test-reporter=tap",
+    "tests/receiver/compatibility.test.mjs",
+    "tests/receiver/contract.test.mjs",
+    "tests/receiver/executor.test.mjs",
+    "tests/receiver/github-service.test.mjs",
+    "tests/receiver/probe-readback.test.mjs"
+  ],
+  "exit_code": 0,
+  "counts": {
+    "tests": 64,
+    "pass": 64,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "existing_receiver_tests": 44,
+  "new_probe_tests": 20,
+  "cli_cases_in_test_suite": 4,
+  "fixture_standing": "All accepted bundles, enabled policies, sender IDs, observations, records and commit references used by tests are synthetic offline fixtures; no live dispatch or capture is established.",
+  "receiver_runtime_source_sha256": "dfd180f83362a1095b60eaf742a023fea355976a4363c7a3cf2cf9fd98fbe058",
+  "inputs": [
+    {
+      "path": ".github/workflows/avot-engine-receiver.yml",
+      "bytes": 1986,
+      "sha256": "099ef82018707a938620be77a05d2108d11df301e24124f37d81e51126b7f072"
+    },
+    {
+      "path": ".github/workflows/avot-receiver-contract.yml",
+      "bytes": 1238,
+      "sha256": "5c0db16b3ef48cf120e1808775c4f10e0bfa7f363860033e6d91fbbb47b3cc26"
+    },
+    {
+      "path": "config/avot-receiver.json",
+      "bytes": 201,
+      "sha256": "57cf7d65fdbcb227d9d0c1bb516763e79da83557cc2f9c3ccaea25931c6d0dab"
+    },
+    {
+      "path": "review/handoff-receipt-probe-001/readback-bundle.template.json",
+      "bytes": 4915,
+      "sha256": "de7b14e86b4b2cca57bcfa786a553f56b29eff434ec6ec1041ce4e1f21a7c8c5"
+    },
+    {
+      "path": "review/handoff-receipt-probe-001/route-event.json",
+      "bytes": 1215,
+      "sha256": "fa712a0abe0f5dbf210047d2b9f6f598954164c8a68348929cd129a094f17345"
+    },
+    {
+      "path": "review/handoff-receipt-probe-001/verify-readback.mjs",
+      "bytes": 17187,
+      "sha256": "d5a2f31458867dc8a4dc246373232d5c4bc8a994ed8bd3be7784492178688255"
+    },
+    {
+      "path": "scripts/receiver/contract.mjs",
+      "bytes": 18042,
+      "sha256": "b27f2d21111ef10e1cee34008d1e4d41ea0617482ef0d7648bd03a56c26131d6"
+    },
+    {
+      "path": "scripts/receiver/encoding.mjs",
+      "bytes": 3496,
+      "sha256": "f9e4054ee9bd2b69f6631f1ea1f3b8d5969fca09287016cc929a432658b16316"
+    },
+    {
+      "path": "scripts/receiver/executor.mjs",
+      "bytes": 8189,
+      "sha256": "a6dc65db803c71e72b1e336eb6ad8cea6bf4b64262933b185be6eb5fde9ecdaf"
+    },
+    {
+      "path": "scripts/receiver/github-service.mjs",
+      "bytes": 6514,
+      "sha256": "4fb3bc2791b2ac715569addab78eeb7608b2a55584dcc7cce1f6f991b1af1010"
+    },
+    {
+      "path": "scripts/receiver/run.mjs",
+      "bytes": 5822,
+      "sha256": "f650770eee5f6bc2e40da223822d4bcb4b92694372686fa4a33e3e6926196fbb"
+    },
+    {
+      "path": "tests/receiver/compatibility.test.mjs",
+      "bytes": 6029,
+      "sha256": "b1b4b3f5d02a0f05636fdfa377f40d49b68d30b0dbc623334bfd401372485980"
+    },
+    {
+      "path": "tests/receiver/contract.test.mjs",
+      "bytes": 13589,
+      "sha256": "36212666e4d938657edfc48718d7dabb1c37321d225820cf96ad70510642ec24"
+    },
+    {
+      "path": "tests/receiver/executor.test.mjs",
+      "bytes": 12343,
+      "sha256": "b0f7885cb7aa8db889258558b3c7c8790e8f52a7e8d6529c4a3557749b7ccefb"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/MANIFEST.json",
+      "bytes": 1190,
+      "sha256": "91823e035f4b0aa698255913ab2379fb35b2093a9ec0371fb37acd4fd9526c71"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/contract.mjs",
+      "bytes": 17258,
+      "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/executor.mjs",
+      "bytes": 11119,
+      "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/normalization.mjs",
+      "bytes": 16751,
+      "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a"
+    },
+    {
+      "path": "tests/receiver/github-service.test.mjs",
+      "bytes": 8723,
+      "sha256": "5d2cda4c3dac8c7941c732eab20b3128f9593473b4bec9bee615e764975295aa"
+    },
+    {
+      "path": "tests/receiver/helpers.mjs",
+      "bytes": 8041,
+      "sha256": "27490e3145c335b3cce6a20803a050f27991eb3dee78e1c5b138f5ab8e9ed01c"
+    },
+    {
+      "path": "tests/receiver/probe-readback.test.mjs",
+      "bytes": 20796,
+      "sha256": "e8838bb718f25591db6dcc84074b00a61aea19adb76c2fe24cf9253b774df605"
+    }
+  ],
+  "inputs_unchanged": true,
+  "tap": {
+    "path": "review/handoff-receipt-probe-001/tests.tap",
+    "bytes": 16098,
+    "sha256": "097f7705ea381b40f8377b1804daebfe449d4888b8d3174141459269d5f9251d"
+  },
+  "incomplete_template_cli": {
+    "exit_code": 1,
+    "disposition": "hold",
+    "issue_codes": [
+      "invalid_expected_senders"
+    ],
+    "external_capture_verified": false,
+    "output_sha256": "caa3116c70af45e2fe68327ddd47b21b498d459b4e28b087380f047fb963a5ec"
+  },
+  "live_probe_run": false,
+  "production_policy_enabled": false
+}

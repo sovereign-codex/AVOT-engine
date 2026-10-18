@@ -1,0 +1,256 @@
+{
+  "schema_version": "avot-receiver-receipt-test-results/1",
+  "standing": "disabled_draft_review",
+  "repository": {
+    "name": "sovereign-codex/AVOT-engine",
+    "base_commit": "dea4b3f0c05334f8abd33ac4c2abae76b094e6f4",
+    "base_tree": "9936597bc7ec02102237c0f0c15390c801612241",
+    "complete_base_files": 83,
+    "other_local_baseline_files_verified": 23
+  },
+  "upstream_contract": {
+    "repository": "sovereign-codex/Codex-control-center",
+    "pull_request": 22,
+    "commit": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+    "test_only_vendored_modules": 3,
+    "fixture_manifest": "tests/receiver/fixtures/ccc-v1/MANIFEST.json",
+    "original_ccc_integration_files_verified_unchanged": 19
+  },
+  "test_run": {
+    "started_at": "2026-10-18T05:56:16Z",
+    "completed_at": "2026-10-18T05:56:17Z",
+    "timestamp_precision": "one second",
+    "node_version": "v24.19.0",
+    "command": "node --test --test-isolation=none --test-reporter=tap tests/receiver/*.test.mjs",
+    "exit_code": 0,
+    "result": "passed",
+    "tests": 44,
+    "suites": 0,
+    "pass": 44,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 639.934743,
+    "groups": [
+      {
+        "file": "tests/receiver/compatibility.test.mjs",
+        "tests": 6
+      },
+      {
+        "file": "tests/receiver/contract.test.mjs",
+        "tests": 15
+      },
+      {
+        "file": "tests/receiver/executor.test.mjs",
+        "tests": 13
+      },
+      {
+        "file": "tests/receiver/github-service.test.mjs",
+        "tests": 10
+      }
+    ],
+    "recorded_output": {
+      "path": "review/avot-receiver-receipt-001/tests.tap",
+      "bytes": 10958,
+      "sha256": "8ed62cf5f54360664b927cfe99afade48a8f1ae82e62dc1ce15193587f041a91",
+      "git_blob_sha": "e30786ae533a094bf88f82076c6aba67ed13e7f0"
+    }
+  },
+  "cli_smoke": {
+    "report": {
+      "path": "review/avot-receiver-receipt-001/CLI_SMOKE.json",
+      "bytes": 4153,
+      "sha256": "beeaf9bfec28a033b899919b88c42541f0e955fe7a04f6ee7b980c6d4715da49",
+      "git_blob_sha": "b762486124a825f56ed52a69e6229e8c4ba528c4"
+    },
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "network_attempts": 0,
+    "expected_exit_code": 1,
+    "ready": false,
+    "event_bytes_preserved": true,
+    "execution_status": "unverified",
+    "completion_claim": false,
+    "tested_source_hashes_rechecked": true,
+    "context_limit": "Smoke uses a non-admitted event and missing commit/workflow context under the disabled policy; authenticated admission is not claimed."
+  },
+  "runtime_source": {
+    "schema_version": "avot-receiver-source/1",
+    "files": [
+      {
+        "path": ".github/workflows/avot-engine-receiver.yml",
+        "sha256": "099ef82018707a938620be77a05d2108d11df301e24124f37d81e51126b7f072"
+      },
+      {
+        "path": "scripts/receiver/contract.mjs",
+        "sha256": "b27f2d21111ef10e1cee34008d1e4d41ea0617482ef0d7648bd03a56c26131d6"
+      },
+      {
+        "path": "scripts/receiver/encoding.mjs",
+        "sha256": "f9e4054ee9bd2b69f6631f1ea1f3b8d5969fca09287016cc929a432658b16316"
+      },
+      {
+        "path": "scripts/receiver/executor.mjs",
+        "sha256": "a6dc65db803c71e72b1e336eb6ad8cea6bf4b64262933b185be6eb5fde9ecdaf"
+      },
+      {
+        "path": "scripts/receiver/github-service.mjs",
+        "sha256": "4fb3bc2791b2ac715569addab78eeb7608b2a55584dcc7cce1f6f991b1af1010"
+      },
+      {
+        "path": "scripts/receiver/run.mjs",
+        "sha256": "f650770eee5f6bc2e40da223822d4bcb4b92694372686fa4a33e3e6926196fbb"
+      }
+    ],
+    "fingerprint": "dfd180f83362a1095b60eaf742a023fea355976a4363c7a3cf2cf9fd98fbe058",
+    "checked_in_policy_pin": null,
+    "policy_excluded_to_avoid_self_reference": true
+  },
+  "checked_in_policy": {
+    "schema_version": "avot-receiver-policy/1",
+    "enabled": false,
+    "ledger_branch": "main",
+    "allowed_dispatch_sender_ids": [],
+    "upstream_policy_sha256": null,
+    "receiver_source_sha256": null
+  },
+  "independent_review_findings_closed": [
+    "Validate the receiver run ID before interpolation so malformed plain JSON and Symbol values produce a structured hold.",
+    "Bind an existing receipt and its derived identity to the requested readback path before recognizing retention.",
+    "Clarify that malformed or unauthorized changes hold before persistence; only fully admitted changed bindings reach collision classification."
+  ],
+  "validation_scope": [
+    "Real pinned CCC Router and Dispatcher preparation/executor modules followed by the production receiver against injected ledgers; complete rich event and wrapper preservation.",
+    "Separate synthetic producer, Router-to-Dispatcher, and Dispatcher-to-Receiver principals (101, 202, 303); full Router and Dispatcher claim checks without outcome dependencies.",
+    "Receiver source fingerprint, policy and context admission, JSON bounds, explicit request identity, immutable preparation objects, and no service access on held input.",
+    "Create-only receipt race, stable repeats across receiver runs and main commits, content/sender binding conflicts, malformed or misplaced records, one readback after uncertain creation, no retry.",
+    "Fixed CCC read and AVOT receipt read/write HTTP operations using injected responses; strict bytes/blob checks, bounded streaming, separate credentials, sanitized failures.",
+    "Disabled CLI prepare/execute preserve exact input bytes and unverified execution with no network attempts."
+  ],
+  "evidence_limits": [
+    "No live receiver repository_dispatch, model execution, TRACE emission, completion callback, credential minting or deployment was performed.",
+    "Injected tests do not establish current App capability, live GitHub atomicity, receipt upload or retrieval, actual source workflow execution, or institutional acceptance.",
+    "Both CCC claims and AVOT receipts depend on repository writers preserving them; this client does not establish immutable custody or exactly-once execution.",
+    "Receipt artifact references describe the expected later workflow upload; they are not upload or retention proof.",
+    "Configured offline CI is not a claim that a remote run has executed or passed. The exact remote PR/check state must be read after staging.",
+    "Control Center and AVOT shipped policies remain disabled; synthetic enabled test policies do not grant live authority."
+  ],
+  "inputs": [
+    {
+      "path": ".github/workflows/avot-engine-receiver.yml",
+      "bytes": 1986,
+      "sha256": "099ef82018707a938620be77a05d2108d11df301e24124f37d81e51126b7f072",
+      "git_blob_sha": "c43bbbabe52b180677acdb3fb5bccbdf9da5c0e3"
+    },
+    {
+      "path": ".github/workflows/avot-receiver-contract.yml",
+      "bytes": 1146,
+      "sha256": "5d18c9c1bf83777e7313b3d76b6ef3092457f462e3c67018ad5c76d9311a4eba",
+      "git_blob_sha": "d86cb0e9e0e9292437cd4120b4de284aa394fb5d"
+    },
+    {
+      "path": "config/avot-receiver.json",
+      "bytes": 201,
+      "sha256": "57cf7d65fdbcb227d9d0c1bb516763e79da83557cc2f9c3ccaea25931c6d0dab",
+      "git_blob_sha": "0b909340619f4ad4519c1aace97fdc72366de2b5"
+    },
+    {
+      "path": "scripts/receiver/encoding.mjs",
+      "bytes": 3496,
+      "sha256": "f9e4054ee9bd2b69f6631f1ea1f3b8d5969fca09287016cc929a432658b16316",
+      "git_blob_sha": "ef10ce1f72f5760297774b37fed76ca23b694d31"
+    },
+    {
+      "path": "scripts/receiver/contract.mjs",
+      "bytes": 18042,
+      "sha256": "b27f2d21111ef10e1cee34008d1e4d41ea0617482ef0d7648bd03a56c26131d6",
+      "git_blob_sha": "91dd7014986251309f262c0fc71fd98acd0f83c4"
+    },
+    {
+      "path": "scripts/receiver/executor.mjs",
+      "bytes": 8189,
+      "sha256": "a6dc65db803c71e72b1e336eb6ad8cea6bf4b64262933b185be6eb5fde9ecdaf",
+      "git_blob_sha": "61baa9ee051dfc4812cd3808bc68d06ea7b1d3b7"
+    },
+    {
+      "path": "scripts/receiver/github-service.mjs",
+      "bytes": 6514,
+      "sha256": "4fb3bc2791b2ac715569addab78eeb7608b2a55584dcc7cce1f6f991b1af1010",
+      "git_blob_sha": "356ecab0cdc3537789ba1254a52b2f27284a8be3"
+    },
+    {
+      "path": "scripts/receiver/run.mjs",
+      "bytes": 5822,
+      "sha256": "f650770eee5f6bc2e40da223822d4bcb4b92694372686fa4a33e3e6926196fbb",
+      "git_blob_sha": "fbbfd7f1cb0d59a833912f367827bf779bcbb724"
+    },
+    {
+      "path": "tests/receiver/helpers.mjs",
+      "bytes": 8041,
+      "sha256": "27490e3145c335b3cce6a20803a050f27991eb3dee78e1c5b138f5ab8e9ed01c",
+      "git_blob_sha": "501bc823e9a2de184f9865e39b269df212100956"
+    },
+    {
+      "path": "tests/receiver/compatibility.test.mjs",
+      "bytes": 6029,
+      "sha256": "b1b4b3f5d02a0f05636fdfa377f40d49b68d30b0dbc623334bfd401372485980",
+      "git_blob_sha": "0a43ec49c94aac934c48a3a1aa2c586278bbf646"
+    },
+    {
+      "path": "tests/receiver/contract.test.mjs",
+      "bytes": 13589,
+      "sha256": "36212666e4d938657edfc48718d7dabb1c37321d225820cf96ad70510642ec24",
+      "git_blob_sha": "4f3e20de95ba115d552b04ecafd1773035945e8d"
+    },
+    {
+      "path": "tests/receiver/executor.test.mjs",
+      "bytes": 12343,
+      "sha256": "b0f7885cb7aa8db889258558b3c7c8790e8f52a7e8d6529c4a3557749b7ccefb",
+      "git_blob_sha": "0b2604673fdf6536d5d5c6d637f7ff3fff437d72"
+    },
+    {
+      "path": "tests/receiver/github-service.test.mjs",
+      "bytes": 8723,
+      "sha256": "5d2cda4c3dac8c7941c732eab20b3128f9593473b4bec9bee615e764975295aa",
+      "git_blob_sha": "08464b067435c1f9d14cc0f4292bc08af4bfbf8c"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/MANIFEST.json",
+      "bytes": 1190,
+      "sha256": "91823e035f4b0aa698255913ab2379fb35b2093a9ec0371fb37acd4fd9526c71",
+      "git_blob_sha": "1d3bf953ac766baa6ccc9597b46e64d9d82cde4a"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/normalization.mjs",
+      "bytes": 16751,
+      "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a",
+      "git_blob_sha": "d747c6a2ccca50e06b8ea7981a4137807abb28c9"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/contract.mjs",
+      "bytes": 17258,
+      "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9",
+      "git_blob_sha": "85da3d02ed356130c050eca4bced7b0de03fb7ac"
+    },
+    {
+      "path": "tests/receiver/fixtures/ccc-v1/executor.mjs",
+      "bytes": 11119,
+      "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9",
+      "git_blob_sha": "2fc00cd59b04a13c68511920f47984b87df833a1"
+    },
+    {
+      "path": "docs/AVOT_RECEIVER_RECEIPT_001.md",
+      "bytes": 14158,
+      "sha256": "6e3890ecd0931c6a44329338c382a9250b207bd1a37968468590ea4fdedcc44a",
+      "git_blob_sha": "d284ebe5540d6a51b829fc14930a2d561d68e5e9"
+    },
+    {
+      "path": "review/avot-receiver-receipt-001/README.md",
+      "bytes": 1591,
+      "sha256": "bb2b3deaa87aa5a321bd66ad7106d6681a40e0bc8ed580f299250486241aaf58",
+      "git_blob_sha": "96e6f6b1bc9ce2d25fe6a02699bd1ffee5855f34"
+    }
+  ]
+}

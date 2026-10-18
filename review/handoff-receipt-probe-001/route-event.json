@@ -1,0 +1,37 @@
+{
+  "event_type": "route-event",
+  "client_payload": {
+    "request_id": "ccc-avot-receipt-probe-20261018-001",
+    "target": "avot-engine-runner",
+    "event": {
+      "trace_id": "trace-ccc-avot-receipt-probe-20261018-001",
+      "repo": "sovereign-codex/Codex-control-center",
+      "workflow": "handoff-receipt-probe-001",
+      "source_event": "manual_receipt_probe",
+      "status": "received",
+      "timestamp": "2026-10-18T06:10:05Z",
+      "payload": {
+        "purpose": "Verify complete handoff retention and attributable readback.",
+        "test_vector": {
+          "message": "Preserve café, Δ, and the full nested content.",
+          "numbers": [0, 1, 2.5],
+          "values": [false, null, "receipt only"],
+          "nested": {"preserve": true}
+        }
+      },
+      "governance": {
+        "posture": "bounded_review_probe",
+        "execution_authorized": false
+      },
+      "runtime_packet": {
+        "packet_id": "packet-ccc-avot-receipt-probe-20261018-001",
+        "execution_state": "received"
+      },
+      "probe_extension": {"preserve_event_extension": true}
+    },
+    "probe_note": {
+      "preserve_wrapper_extension": true,
+      "execution_requested": false
+    }
+  }
+}

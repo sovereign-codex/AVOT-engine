@@ -1,0 +1,44 @@
+name: AVOT Receiver Contract
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/receiver/**'
+      - 'config/avot-receiver.json'
+      - 'tests/receiver/**'
+      - 'review/handoff-receipt-probe-001/**'
+      - '.github/workflows/avot-engine-receiver.yml'
+      - '.github/workflows/avot-receiver-contract.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/receiver/**'
+      - 'config/avot-receiver.json'
+      - 'tests/receiver/**'
+      - 'review/handoff-receipt-probe-001/**'
+      - '.github/workflows/avot-engine-receiver.yml'
+      - '.github/workflows/avot-receiver-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout test commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Run offline receiver and interoperability tests
+        run: node --test --test-isolation=none tests/receiver/*.test.mjs
